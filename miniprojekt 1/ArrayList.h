@@ -11,6 +11,7 @@ private:
 public:
     ArrayList() : ileElementow{ 0 }, przedmioty{ nullptr } {} //konstruktor
     ~ArrayList(); //destruktor
+
     void dodajElement(T element); //metoda dodająca element do tablicy na końcu
     void dodajElement(T element, int index); //metoda dodająca element na podanym indeksie
     void usunElement(int index); //metoda usuwająca element z tablicy
@@ -29,14 +30,14 @@ ArrayList<T>::~ArrayList() {
 
 template<typename T>
 void ArrayList<T>::dodajElement(T element) {
-    T *nowaTablica = new T[ileElementow + 1];
-    for (int i = 0; i < ileElementow; i++) {
+    T *nowaTablica = new T[ileElementow + 1]; //tworzymy nową tablicę o 1 większą
+    for (int i = 0; i < ileElementow; i++) {  //przepisujemy elementy z tablicy przedmioty do nowej tablicy
         nowaTablica[i] = przedmioty[i];
     }
-    nowaTablica[ileElementow] = element;
-    delete[] przedmioty;
-    przedmioty = nowaTablica;
-    ileElementow++;
+    nowaTablica[ileElementow] = element; //dodajemy nowy element na końcu tablicy
+    delete[] przedmioty; //zwalniamy pamięć zajmowaną przez starą tablicę
+    przedmioty = nowaTablica; //przypisujemy nową tablicę do wskaźnika przedmioty
+    ileElementow++; //zwiększamy licznik elementów
 }
 
 template<typename T>
