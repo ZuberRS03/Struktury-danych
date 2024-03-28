@@ -35,6 +35,16 @@ int main() {
             lista.dodajElement(15);
             lista.dodajElement(20);
             lista.wypisz();
+            lista.dodajElement(25, 2);
+            lista.wypisz();
+            lista.usunElement(1);
+            lista.wypisz();
+            cout << "Rozmiar tablicy: " << lista.rozmiar() << endl;
+            cout << "Element na indeksie 1: " << lista.pobierzElement(1) << endl;
+            lista.wyszukajElement(15);
+            lista.wyszukajElement(100);
+            lista.wyczysc();
+            cout << "Rozmiar tablicy: " << lista.rozmiar() << endl;
             break;
         }
         case 2: {
