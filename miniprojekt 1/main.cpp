@@ -4,6 +4,7 @@
 #include <random>
 
 #include "ArrayList.h"
+#include "LinkedList.h"
 
 using namespace std;
 clock_t start, stop;
@@ -57,6 +58,11 @@ int main() {
         }
         case 2: {
             cout << "Wybrano liste jednokierunkowa (head)" << endl;
+            LinkedList<int> lista;
+            for(int i = 0; i < ileElementow; i++){
+                lista.addFront(losujLiczbe(min, max)); // Dodajemy elementy na początku listy
+            }
+            lista.print(); // Wyświetlamy zawartość listy
             break;
         }
         case 3: {
