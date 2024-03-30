@@ -1,6 +1,7 @@
 #include <iostream>
 #include <time.h>
 #include <cstdlib>
+#include <random>
 
 #include "ArrayList.h"
 
@@ -22,18 +23,35 @@ int menu_Struktury_Danych(){
     cin >> wybor;
     return wybor;
 }
+int losujLiczbe(int min, int max){
+    return rand() % (max - min + 1) + min;
+}
+
 int main() {
 
-    wyborStruktury:
-    int wybor = menu_Struktury_Danych();
+    wyborStruktury: // etykieta na wypadek złego wyboru opcji z menu
+    int wybor = menu_Struktury_Danych(); // wybór struktury danych
+
+    // określenie początkowej wielkości struktury danych
+    int ileElementow = 0;
+    cout << "Ile elementow chcesz wylosowac do struktury danych?" << endl;
+    cin >> ileElementow;
+
+    // określenie zakresu losowanych liczb
+    int min, max;
+    cout << "Podaj zakres liczb do losowania:" << endl;
+    cout << "Min: ";
+    cin >> min;
+    cout << "Max: ";
+    cin >> max;
+
     switch(wybor){
         case 1: {
             cout << "Wybrano tablice dynamiczna (ArrayList)" << endl;
             ArrayList<int> lista;
-            lista.dodajElement(5);
-            lista.dodajElement(10);
-            lista.dodajElement(15);
-            lista.dodajElement(20);
+            for(int i = 0; i < ileElementow; i++){
+                lista.dodajElement(losujLiczbe(min, max));
+            }
             lista.wypisz();
             break;
         }
