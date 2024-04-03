@@ -5,6 +5,12 @@
 
 #include "ArrayList.h"
 #include "LinkedList.h"
+#include "LinkedListWithTail.h"
+
+#include <iostream>
+#include <time.h>
+#include <cstdlib>
+#include <random>
 
 using namespace std;
 clock_t start, stop;
@@ -60,13 +66,18 @@ int main() {
             cout << "Wybrano liste jednokierunkowa (head)" << endl;
             LinkedList<int> lista;
             for(int i = 0; i < ileElementow; i++){
-                lista.addFront(losujLiczbe(min, max)); // Dodajemy elementy na początku listy
+                lista.addFront(losujLiczbe(min, max)); 
             }
-            lista.print(); // Wyświetlamy zawartość listy
+            lista.print(); 
             break;
         }
         case 3: {
-            cout << "Wybrano liste jednokierunkowa (head, tail)" << endl;
+              cout << "Wybrano liste jednokierunkowa (head, tail)" << endl;
+            LinkedListWithTail<int> lista;
+            for(int i = 0; i < ileElementow; i++){
+                lista.addBack(losujLiczbe(min, max)); 
+            }
+            lista.print();
             break;
         }
         case 4: {
