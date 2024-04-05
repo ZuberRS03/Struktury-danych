@@ -54,6 +54,26 @@ void wypelnijListyLinkedList(LinkedList<int> listy[], int dane[], int liczbaElem
     }
 }
 
+void wypelnijListyLinkedListWithTail(LinkedListWithTail<int> listy[], int dane[], int liczbaElementow, int liczbaPomiarow) {
+    cout << "Start listy:" << endl;
+    for(int i = 0; i < liczbaPomiarow; i++) {
+        listy[i] = LinkedListWithTail<int>();
+        for(int j = 0; j < liczbaElementow; j++) {
+            listy[i].addEnd(dane[j]);
+        }
+    }
+}
+
+void wypelnijListyDoubleLinkedList(DoubleLinkedList<int> listy[], int dane[], int liczbaElementow, int liczbaPomiarow) {
+    cout << "Start listy:" << endl;
+    for(int i = 0; i < liczbaPomiarow; i++) {
+        listy[i] = DoubleLinkedList<int>();
+        for(int j = 0; j < liczbaElementow; j++) {
+            listy[i].addEnd(dane[j]);
+        }
+    }
+}
+
 int main() {
 
     const int liczbaPomiarow = 2; // Liczba pomiarów
@@ -146,7 +166,6 @@ int main() {
                 wypelnijListyLinkedList(listy, DaneZPliku, startElementow, liczbaPomiarow);
 
                 double calkowityCzasNaPoczatku = 0.0;
-                cout << "Listy po dodaniu elementu na poczatku:" << endl;
                 for(int i = 0; i < liczbaPomiarow; i++) {
                     auto start = high_resolution_clock::now();
                     listy[i].addFront(5);
@@ -160,7 +179,6 @@ int main() {
                 wypelnijListyLinkedList(listy, DaneZPliku, startElementow, liczbaPomiarow);
 
                 double calkowityCzasNaKoncu = 0.0;
-                cout << "Listy po dodaniu elementu na koncu:" << endl;
                 for(int i = 0; i < liczbaPomiarow; i++) {
                     auto start = high_resolution_clock::now();
                     listy[i].addEnd(5);
@@ -174,7 +192,6 @@ int main() {
                 wypelnijListyLinkedList(listy, DaneZPliku, startElementow, liczbaPomiarow);
 
                 double calkowityCzasLosoweMiejsce = 0.0;
-                cout << "Listy po dodaniu elementu w losowym miejscu:" << endl;
                 for(int i = 0; i < liczbaPomiarow; i++) {
                     int losoweMiejsce = losujLiczbe(0, startElementow);
                     auto start = high_resolution_clock::now();
@@ -190,24 +207,111 @@ int main() {
             break;
         }
         case 3: {
-            cout << "Wybrano liste jednokierunkowa (head, tail)" << endl;
-//            LinkedListWithTail<int> lista;
-//            for(int i = 0; i < ileElementow; i++){
-//                lista.addBack(losujLiczbe(min, max));
-//            }
-//            lista.print();
+            fout.open("wynikiLinkedListWithTail.txt"); //Otwarie pliku do zapisu wyników
+            fout << "Ilosc elementow startowych; sredni czas dodania elementu na poczatku [ms]; sredni czas dodania elementu na koncu [ms]; sredni czas dodania elementu w losowym miejscu [ms]"<< endl;
+
+            LinkedListWithTail<int> listy[liczbaPomiarow]; // Tworzenie tablicy list
+
+            //petla uzupelniajaca tablice listy
+            for(int startElementow = 0; startElementow < 10; startElementow += 1){
+
+
+                //Pomiary dodania elementu na poczatku
+                wypelnijListyLinkedListWithTail(listy, DaneZPliku, startElementow, liczbaPomiarow);
+
+                double calkowityCzasNaPoczatku = 0.0;
+                for(int i = 0; i < liczbaPomiarow; i++) {
+                    auto start = high_resolution_clock::now();
+                    listy[i].addFront(5);
+                    auto stop = high_resolution_clock::now();
+                    calkowityCzasNaPoczatku += duration<double, milli>(stop - start).count();
+                }
+
+                double sredniCzasNaPoczatku = calkowityCzasNaPoczatku / liczbaPomiarow; // Obliczanie średniego czasu
+
+                //Pomiar czasu dodania elementu na końcu
+                wypelnijListyLinkedListWithTail(listy, DaneZPliku, startElementow, liczbaPomiarow);
+
+                double calkowityCzasNaKoncu = 0.0;
+                for(int i = 0; i < liczbaPomiarow; i++) {
+                    auto start = high_resolution_clock::now();
+                    listy[i].addEnd(5);
+                    auto stop = high_resolution_clock::now();
+                    calkowityCzasNaKoncu += duration<double, milli>(stop - start).count();
+                }
+
+                double sredniCzasNaKoncu = calkowityCzasNaKoncu / liczbaPomiarow; // Obliczanie średniego czasu
+
+                //Pomiar czasu dodania elementu w losowym miejscu
+                wypelnijListyLinkedListWithTail(listy, DaneZPliku, startElementow, liczbaPomiarow);
+
+                double calkowityCzasLosoweMiejsce = 0.0;
+                for(int i = 0; i < liczbaPomiarow; i++) {
+                    int losoweMiejsce = losujLiczbe(0, startElementow);
+                    auto start = high_resolution_clock::now();
+                    listy[i].addAt(5,losoweMiejsce);
+                    auto stop = high_resolution_clock::now();
+                    calkowityCzasLosoweMiejsce += duration<double, milli>(stop - start).count();
+                }
+                double sredniCzasLosoweMiejsce = calkowityCzasLosoweMiejsce / liczbaPomiarow; // Obliczanie średniego czasu
+                fout << startElementow << ";" << fixed << setprecision(6) << sredniCzasNaPoczatku << fixed << setprecision(6) << sredniCzasNaKoncu << fixed << setprecision(6) << sredniCzasLosoweMiejsce <<endl;
+            }
+
+            fout.close();
             break;
         }
         case 4: {
-            cout << "Wybrano liste dwukierunkowa" << endl;
-//            DoubleLinkedList<int> lista;
-//            for(int i = 0; i < ileElementow; i++){
-//                lista.addBack(losujLiczbe(min, max)); // Dodajemy elementy na końcu listy
-//            }
-//            cout << "Lista dwukierunkowa (przód): ";
-//            lista.printForward();
-//            cout << "Lista dwukierunkowa (tył): ";
-//            lista.printBackward();
+            fout.open("wynikiDoubleLinkedList.txt"); //Otwarie pliku do zapisu wyników
+            fout << "Ilosc elementow startowych; sredni czas dodania elementu na poczatku [ms]; sredni czas dodania elementu na koncu [ms]; sredni czas dodania elementu w losowym miejscu [ms]"<< endl;
+
+            DoubleLinkedList<int> listy[liczbaPomiarow]; // Tworzenie tablicy list
+
+            //petla uzupelniajaca tablice listy
+            for(int startElementow = 0; startElementow < 10; startElementow += 1){
+
+
+                //Pomiary dodania elementu na poczatku
+                wypelnijListyDoubleLinkedList(listy, DaneZPliku, startElementow, liczbaPomiarow);
+
+                double calkowityCzasNaPoczatku = 0.0;
+                for(int i = 0; i < liczbaPomiarow; i++) {
+                    auto start = high_resolution_clock::now();
+                    listy[i].addFront(5);
+                    auto stop = high_resolution_clock::now();
+                    calkowityCzasNaPoczatku += duration<double, milli>(stop - start).count();
+                }
+
+                double sredniCzasNaPoczatku = calkowityCzasNaPoczatku / liczbaPomiarow; // Obliczanie średniego czasu
+
+                //Pomiar czasu dodania elementu na końcu
+                wypelnijListyDoubleLinkedList(listy, DaneZPliku, startElementow, liczbaPomiarow);
+
+                double calkowityCzasNaKoncu = 0.0;
+                for(int i = 0; i < liczbaPomiarow; i++) {
+                    auto start = high_resolution_clock::now();
+                    listy[i].addEnd(5);
+                    auto stop = high_resolution_clock::now();
+                    calkowityCzasNaKoncu += duration<double, milli>(stop - start).count();
+                }
+
+                double sredniCzasNaKoncu = calkowityCzasNaKoncu / liczbaPomiarow; // Obliczanie średniego czasu
+
+                //Pomiar czasu dodania elementu w losowym miejscu
+                wypelnijListyDoubleLinkedList(listy, DaneZPliku, startElementow, liczbaPomiarow);
+
+                double calkowityCzasLosoweMiejsce = 0.0;
+                for(int i = 0; i < liczbaPomiarow; i++) {
+                    int losoweMiejsce = losujLiczbe(0, startElementow);
+                    auto start = high_resolution_clock::now();
+                    listy[i].addAt(5,losoweMiejsce);
+                    auto stop = high_resolution_clock::now();
+                    calkowityCzasLosoweMiejsce += duration<double, milli>(stop - start).count();
+                }
+                double sredniCzasLosoweMiejsce = calkowityCzasLosoweMiejsce / liczbaPomiarow; // Obliczanie średniego czasu
+                fout << startElementow << ";" << fixed << setprecision(6) << sredniCzasNaPoczatku << fixed << setprecision(6) << sredniCzasNaKoncu << fixed << setprecision(6) << sredniCzasLosoweMiejsce <<endl;
+            }
+
+            fout.close();
             break;
         }
         default: {
