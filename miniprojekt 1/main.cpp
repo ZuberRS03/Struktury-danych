@@ -9,10 +9,7 @@
 #include "ArrayList.h"
 #include "LinkedLists.h"
 #include "LinkedListWithTail.h"
-<<<<<<< HEAD
 #include "DoubleLinkedList.h"
-=======
->>>>>>> cf87948e6876d248b7871334fca360bacc0ede75
 
 using namespace std;
 using namespace std::chrono;
