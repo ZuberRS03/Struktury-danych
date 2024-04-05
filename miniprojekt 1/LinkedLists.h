@@ -20,8 +20,10 @@ public:
     // Metoda dodająca element na początku listy
     void addFront(T data);
 
+    // Metoda dodająca element na końcu listy
     void addEnd(T data);
 
+    // Metoda dodająca element na podanym indeksie
     void addAt(T data, int index);
 
     // Metoda usuwająca element z początku listy

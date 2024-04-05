@@ -36,11 +36,20 @@ int losujLiczbe(int min, int max){
     return rand() % (max - min + 1) + min;
 }
 
-void wypelnijListy(ArrayList<int> listy[], int dane[], int liczbaElementow, int liczbaPomiarow) {
+void wypelnijListyArray(ArrayList<int> listy[], int dane[], int liczbaElementow, int liczbaPomiarow) {
     for(int i = 0; i < liczbaPomiarow; i++) {
         listy[i] = ArrayList<int>();
         for(int j = 0; j < liczbaElementow; j++) {
             listy[i].dodajElementNaKoniec(dane[j]);
+        }
+    }
+}
+
+void wypelnijListyLinkedList(LinkedList<int> listy[], int dane[], int liczbaElementow, int liczbaPomiarow) {
+    for(int i = 0; i < liczbaPomiarow; i++) {
+        listy[i] = LinkedList<int>();
+        for(int j = 0; j < liczbaElementow; j++) {
+            listy[i].addEnd(dane[j]);
         }
     }
 }
@@ -78,7 +87,7 @@ int main() {
             for(int startElementow = 0; startElementow < 500000; startElementow += 10000){
 
                 //Pomiary dodania elementu na poczatku
-                wypelnijListy(listy, DaneZPliku, startElementow, liczbaPomiarow);
+                wypelnijListyArray(listy, DaneZPliku, startElementow, liczbaPomiarow);
 
                 double calkowityCzasNaPoczatku = 0.0;
                 for(int i = 0; i < liczbaPomiarow; i++) {
@@ -91,7 +100,7 @@ int main() {
                 double sredniCzasNaPoczatku = calkowityCzasNaPoczatku / liczbaPomiarow; // Obliczanie średniego czasu
 
                 //Pomiar czasu dodania elementu na końcu
-                wypelnijListy(listy, DaneZPliku, startElementow, liczbaPomiarow);
+                wypelnijListyArray(listy, DaneZPliku, startElementow, liczbaPomiarow);
 
                 double calkowityCzasNaKoncu = 0.0;
                 for(int i = 0; i < liczbaPomiarow; i++) {
@@ -104,7 +113,7 @@ int main() {
                 double sredniCzasNaKoncu = calkowityCzasNaKoncu / liczbaPomiarow; // Obliczanie średniego czasu
 
                 //Pomiar czasu dodania elementu w losowym miejscu
-                wypelnijListy(listy, DaneZPliku, startElementow, liczbaPomiarow);
+                wypelnijListyArray(listy, DaneZPliku, startElementow, liczbaPomiarow);
 
                 double calkowityCzasLosoweMiejsce = 0.0;
                 for(int i = 0; i < liczbaPomiarow; i++) {
@@ -134,14 +143,7 @@ int main() {
 
 
                 //Pomiary dodania elementu na poczatku
-                cout << "Początkowe listy" << endl;
-                for(int i = 0; i < liczbaPomiarow; i++) {
-                    listy[i] = LinkedList<int>();
-                    for(int j = 0; j < startElementow; j++) {
-                        listy[i].addEnd(DaneZPliku[j]);
-                    }
-                    listy[i].print();
-                }
+                wypelnijListyLinkedList(listy, DaneZPliku, startElementow, liczbaPomiarow);
 
                 double calkowityCzasNaPoczatku = 0.0;
                 cout << "Listy po dodaniu elementu na poczatku:" << endl;
@@ -150,20 +152,12 @@ int main() {
                     listy[i].addFront(5);
                     auto stop = high_resolution_clock::now();
                     calkowityCzasNaPoczatku += duration<double, milli>(stop - start).count();
-                    cout << "Czas: " << calkowityCzasNaPoczatku << endl;
-                    listy[i].print();
                 }
 
                 double sredniCzasNaPoczatku = calkowityCzasNaPoczatku / liczbaPomiarow; // Obliczanie średniego czasu
 
-                cout << "Początkowe listy" << endl;
-                for(int i = 0; i < liczbaPomiarow; i++) {
-                    listy[i] = LinkedList<int>();
-                    for(int j = 0; j < startElementow; j++) {
-                        listy[i].addEnd(DaneZPliku[j]);
-                    }
-                    listy[i].print();
-                }
+                //Pomiar czasu dodania elementu na końcu
+                wypelnijListyLinkedList(listy, DaneZPliku, startElementow, liczbaPomiarow);
 
                 double calkowityCzasNaKoncu = 0.0;
                 cout << "Listy po dodaniu elementu na koncu:" << endl;
@@ -172,20 +166,12 @@ int main() {
                     listy[i].addEnd(5);
                     auto stop = high_resolution_clock::now();
                     calkowityCzasNaKoncu += duration<double, milli>(stop - start).count();
-                    cout << "Czas: " << calkowityCzasNaKoncu << endl;
-                    listy[i].print();
                 }
 
                 double sredniCzasNaKoncu = calkowityCzasNaKoncu / liczbaPomiarow; // Obliczanie średniego czasu
 
-                cout << "Początkowe listy" << endl;
-                for(int i = 0; i < liczbaPomiarow; i++) {
-                    listy[i] = LinkedList<int>();
-                    for(int j = 0; j < startElementow; j++) {
-                        listy[i].addEnd(DaneZPliku[j]);
-                    }
-                    listy[i].print();
-                }
+                //Pomiar czasu dodania elementu w losowym miejscu
+                wypelnijListyLinkedList(listy, DaneZPliku, startElementow, liczbaPomiarow);
 
                 double calkowityCzasLosoweMiejsce = 0.0;
                 cout << "Listy po dodaniu elementu w losowym miejscu:" << endl;
@@ -195,15 +181,12 @@ int main() {
                     listy[i].addAt(5,losoweMiejsce);
                     auto stop = high_resolution_clock::now();
                     calkowityCzasLosoweMiejsce += duration<double, milli>(stop - start).count();
-                    cout << "Czas: " << calkowityCzasLosoweMiejsce << endl;
-                    listy[i].print();
                 }
                 double sredniCzasLosoweMiejsce = calkowityCzasLosoweMiejsce / liczbaPomiarow; // Obliczanie średniego czasu
-                cout << startElementow << ";" << fixed << setprecision(6) << sredniCzasNaPoczatku << fixed << setprecision(6) << sredniCzasNaKoncu << fixed << setprecision(6) << sredniCzasLosoweMiejsce <<endl;
+                fout << startElementow << ";" << fixed << setprecision(6) << sredniCzasNaPoczatku << fixed << setprecision(6) << sredniCzasNaKoncu << fixed << setprecision(6) << sredniCzasLosoweMiejsce <<endl;
             }
 
             fout.close();
-
             break;
         }
         case 3: {
