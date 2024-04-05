@@ -1,17 +1,10 @@
 #ifndef LINKEDLIST_H
 #define LINKEDLIST_H
 
+#include "Node.h"
 #include <iostream>
 
-template <typename T>
-class Node {
-public:
-    T data; // Dane przechowywane w węźle
-    Node<T>* next; // Wskaźnik na następny węzeł w liście
 
-    // Konstruktor inicjalizujący węzeł z danymi i opcjonalnie z następnym węzłem
-    Node(T data, Node<T>* next = nullptr) : data(data), next(next) {}
-};
 
 template <typename T>
 class LinkedList {

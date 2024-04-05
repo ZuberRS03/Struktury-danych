@@ -1,16 +1,10 @@
 #ifndef LINKEDLISTWITHTAIL_H
 #define LINKEDLISTWITHTAIL_H
 
+#include "Node.h"
 #include <iostream>
 
-template <typename T>
-class Node {
-public:
-    T data; // Dane przechowywane w węźle
-    Node<T>* next; // Wskaźnik na następny węzeł w liście
 
-    Node(T data, Node<T>* next = nullptr) : data(data), next(next) {}
-};
 
 template <typename T>
 class LinkedListWithTail {

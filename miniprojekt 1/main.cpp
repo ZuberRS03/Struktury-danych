@@ -4,8 +4,9 @@
 #include <random>
 
 #include "ArrayList.h"
-#include "LinkedList.h"
+#include "LinkedLists.h"
 #include "LinkedListWithTail.h"
+#include "DoubleLinkedList.h"
 
 #include <iostream>
 #include <time.h>
@@ -82,7 +83,15 @@ int main() {
         }
         case 4: {
             cout << "Wybrano liste dwukierunkowa" << endl;
-            break;
+    DoubleLinkedList<int> lista;
+    for(int i = 0; i < ileElementow; i++){
+        lista.addBack(losujLiczbe(min, max)); // Dodajemy elementy na końcu listy
+    }
+    cout << "Lista dwukierunkowa (przód): ";
+    lista.printForward();
+    cout << "Lista dwukierunkowa (tył): ";
+    lista.printBackward();
+    break;
         }
         default: {
             cout << "Niepoprawny wybor, wybierz ocpcje od 1 do 4:" << endl;
