@@ -39,6 +39,15 @@ int losujLiczbe(int min, int max){
     return rand() % (max - min + 1) + min;
 }
 
+void wypelnijListy(ArrayList<int> listy[], int dane[], int liczbaElementow, int liczbaPomiarow) {
+    for(int i = 0; i < liczbaPomiarow; i++) {
+        listy[i] = ArrayList<int>();
+        for(int j = 0; j < liczbaElementow; j++) {
+            listy[i].dodajElementNaKoniec(dane[j]);
+        }
+    }
+}
+
 int main() {
 
     const int liczbaPomiarow = 50; // Liczba pomiarów
@@ -72,12 +81,7 @@ int main() {
             for(int startElementow = 0; startElementow < 500000; startElementow += 10000){
 
                 //Pomiary dodania elementu na poczatku
-                for(int i = 0; i < liczbaPomiarow; i++) {
-                    listy[i] = ArrayList<int>();
-                    for(int j = 0; j < startElementow; j++) {
-                        listy[i].dodajElementNaKoniec(DaneZPliku[j]);
-                    }
-                }
+                wypelnijListy(listy, DaneZPliku, startElementow, liczbaPomiarow);
 
                 double calkowityCzasNaPoczatku = 0.0;
                 for(int i = 0; i < liczbaPomiarow; i++) {
@@ -90,12 +94,7 @@ int main() {
                 double sredniCzasNaPoczatku = calkowityCzasNaPoczatku / liczbaPomiarow; // Obliczanie średniego czasu
 
                 //Pomiar czasu dodania elementu na końcu
-                for(int i = 0; i < liczbaPomiarow; i++) {
-                    listy[i] = ArrayList<int>();
-                    for(int j = 0; j < startElementow; j++) {
-                        listy[i].dodajElementNaKoniec(DaneZPliku[j]);
-                    }
-                }
+                wypelnijListy(listy, DaneZPliku, startElementow, liczbaPomiarow);
 
                 double calkowityCzasNaKoncu = 0.0;
                 for(int i = 0; i < liczbaPomiarow; i++) {
@@ -108,12 +107,7 @@ int main() {
                 double sredniCzasNaKoncu = calkowityCzasNaKoncu / liczbaPomiarow; // Obliczanie średniego czasu
 
                 //Pomiar czasu dodania elementu w losowym miejscu
-                for(int i = 0; i < liczbaPomiarow; i++) {
-                    listy[i] = ArrayList<int>();
-                    for(int j = 0; j < startElementow; j++) {
-                        listy[i].dodajElementNaKoniec(DaneZPliku[j]);
-                    }
-                }
+                wypelnijListy(listy, DaneZPliku, startElementow, liczbaPomiarow);
 
                 double calkowityCzasLosoweMiejsce = 0.0;
                 for(int i = 0; i < liczbaPomiarow; i++) {
@@ -152,15 +146,15 @@ int main() {
         }
         case 4: {
             cout << "Wybrano liste dwukierunkowa" << endl;
-    DoubleLinkedList<int> lista;
-    for(int i = 0; i < ileElementow; i++){
-        lista.addBack(losujLiczbe(min, max)); // Dodajemy elementy na końcu listy
-    }
-    cout << "Lista dwukierunkowa (przód): ";
-    lista.printForward();
-    cout << "Lista dwukierunkowa (tył): ";
-    lista.printBackward();
-    break;
+//            DoubleLinkedList<int> lista;
+//            for(int i = 0; i < ileElementow; i++){
+//                lista.addBack(losujLiczbe(min, max)); // Dodajemy elementy na końcu listy
+//            }
+//            cout << "Lista dwukierunkowa (przód): ";
+//            lista.printForward();
+//            cout << "Lista dwukierunkowa (tył): ";
+//            lista.printBackward();
+            break;
         }
         default: {
             cout << "Niepoprawny wybor, wybierz ocpcje od 1 do 4:" << endl;
