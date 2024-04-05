@@ -6,8 +6,9 @@ class Node {
 public:
     T data;
     Node* next;
-    Node* prev; // Dodane dla wsparcia listy dwukierunkowej, dla listy jednokierunkowej pozostaje nie używane
+    Node* prev; // Używane tylko przez DoubleLinkedList
 
+    // Konstruktor uniwersalny
     Node(T data, Node* prev = nullptr, Node* next = nullptr) : data(data), prev(prev), next(next) {}
 };
 
