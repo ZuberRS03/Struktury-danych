@@ -136,16 +136,16 @@ int main() {
             cout << "Wybrano liste jednokierunkowa (head)" << endl;
             LinkedList<int> lista;
             for(int i = 0; i < ileElementow; i++){
-                lista.addFront(losujLiczbe(min, max));
+                lista.addFront(losujLiczbe(min, max)); 
             }
-            lista.print();
+            lista.print(); 
             break;
         }
         case 3: {
-            cout << "Wybrano liste jednokierunkowa (head, tail)" << endl;
+              cout << "Wybrano liste jednokierunkowa (head, tail)" << endl;
             LinkedListWithTail<int> lista;
             for(int i = 0; i < ileElementow; i++){
-                lista.addBack(losujLiczbe(min, max));
+                lista.addBack(losujLiczbe(min, max)); 
             }
             lista.print();
             break;
