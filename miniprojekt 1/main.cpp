@@ -9,6 +9,10 @@
 #include "ArrayList.h"
 #include "LinkedLists.h"
 #include "LinkedListWithTail.h"
+<<<<<<< HEAD
+#include "DoubleLinkedList.h"
+=======
+>>>>>>> cf87948e6876d248b7871334fca360bacc0ede75
 
 using namespace std;
 using namespace std::chrono;
@@ -148,7 +152,15 @@ int main() {
         }
         case 4: {
             cout << "Wybrano liste dwukierunkowa" << endl;
-            break;
+    DoubleLinkedList<int> lista;
+    for(int i = 0; i < ileElementow; i++){
+        lista.addBack(losujLiczbe(min, max)); // Dodajemy elementy na końcu listy
+    }
+    cout << "Lista dwukierunkowa (przód): ";
+    lista.printForward();
+    cout << "Lista dwukierunkowa (tył): ";
+    lista.printBackward();
+    break;
         }
         default: {
             cout << "Niepoprawny wybor, wybierz ocpcje od 1 do 4:" << endl;
