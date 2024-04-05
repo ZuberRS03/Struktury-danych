@@ -7,13 +7,15 @@ template <typename T>
 class ArrayList {
 private:
     int ileElementow; //licznik elementów w tablicy
+    int pojemnosc; //pojemność tablicy
     T *przedmioty; //tablica przechowująca elementy
 public:
-    ArrayList() : ileElementow{ 0 }, przedmioty{ nullptr } {} //konstruktor
+    ArrayList() : ileElementow{ 0 }, pojemnosc{ 0 }, przedmioty{ nullptr } {} //konstruktor
     ~ArrayList(); //destruktor
 
-    void dodajElement(T element); //metoda dodająca element do tablicy na końcu
+    void dodajElementNaKoniec(T element); //metoda dodająca element do tablicy na końcu
     void dodajElement(T element, int index); //metoda dodająca element na podanym indeksie
+    void dodajElementNaPoczatek(T element); //metoda dodająca element na początku tablicy
     void usunElement(int index); //metoda usuwająca element z tablicy
     int rozmiar(); //metoda zwracająca ilość elementów w tablicy
     void wypisz(); //metoda wypisująca elementy tablicy
@@ -21,6 +23,8 @@ public:
     void zmienRozmiar(int nowyRozmiar); //metoda zmieniająca rozmiar tablicy
     void wyszukajElement(T element); //metoda wyszukująca element w tablicy
     T pobierzElement(int index); //metoda zwracająca element z tablicy
+    int getIleElementow(); //metoda zwracająca ilość elementów w tablicy
+    int getPojemnosc(); //metoda zwracająca pojemność tablicy
 };
 
 template<typename T>
@@ -29,14 +33,21 @@ ArrayList<T>::~ArrayList() {
 }
 
 template<typename T>
-void ArrayList<T>::dodajElement(T element) {
-    T *nowaTablica = new T[ileElementow + 1]; //tworzymy nową tablicę o 1 większą
-    for (int i = 0; i < ileElementow; i++) {  //przepisujemy elementy z tablicy przedmioty do nowej tablicy
-        nowaTablica[i] = przedmioty[i];
+void ArrayList<T>::dodajElementNaKoniec(T element) {
+    if (ileElementow == pojemnosc) { //jeżeli liczba elementów jest równa pojemności tablicy
+        if(pojemnosc == 0)
+            pojemnosc = 1; //jeżeli pojemność tablicy jest równa 0 to ustawiamy ją na 1 (pierwszy element w tablicy)
+        pojemnosc *= 2; //podwajamy pojemność tablicy
+        T *nowaTablica = new T[pojemnosc]; //tworzymy nową tablicę o 1 większą
+        for (int i = 0; i < ileElementow; i++) {  //przepisujemy elementy z tablicy przedmioty do nowej tablicy
+            nowaTablica[i] = przedmioty[i];
+        }
+        nowaTablica[ileElementow] = element; //dodajemy nowy element na końcu tablicy
+        delete[] przedmioty; //zwalniamy pamięć zajmowaną przez starą tablicę
+        przedmioty = nowaTablica; //przypisujemy nową tablicę do wskaźnika przedmioty
+    } else {
+        przedmioty[ileElementow] = element; //dodajemy nowy element na końcu tablicy
     }
-    nowaTablica[ileElementow] = element; //dodajemy nowy element na końcu tablicy
-    delete[] przedmioty; //zwalniamy pamięć zajmowaną przez starą tablicę
-    przedmioty = nowaTablica; //przypisujemy nową tablicę do wskaźnika przedmioty
     ileElementow++; //zwiększamy licznik elementów
 }
 
@@ -46,16 +57,48 @@ void ArrayList<T>::dodajElement(T element, int index) {
     if (index < 0 || index > ileElementow) {
         throw std::out_of_range("Niepoprawny indeks");
     }
-    T *nowaTablica = new T[ileElementow + 1];
-    for (int i = 0; i < index; i++) {
-        nowaTablica[i] = przedmioty[i];
+    if (ileElementow == pojemnosc) {
+        if(pojemnosc == 0)
+            pojemnosc = 1;
+        pojemnosc *= 2;
+        T *nowaTablica = new T[pojemnosc];
+        for (int i = 0; i < index; i++) {
+            nowaTablica[i] = przedmioty[i];
+        }
+        nowaTablica[index] = element;
+        for (int i = index; i < ileElementow; i++) {
+            nowaTablica[i + 1] = przedmioty[i];
+        }
+        delete[] przedmioty;
+        przedmioty = nowaTablica;
+    } else {
+        for (int i = ileElementow; i > index; i--) {
+            przedmioty[i] = przedmioty[i - 1];
+        }
+        przedmioty[index] = element;
     }
-    nowaTablica[index] = element;
-    for (int i = index; i < ileElementow; i++) {
-        nowaTablica[i + 1] = przedmioty[i];
+    ileElementow++;
+}
+
+template<typename T>
+void ArrayList<T>::dodajElementNaPoczatek(T element) {
+    if (ileElementow == pojemnosc) {
+        if(pojemnosc == 0)
+            pojemnosc = 1;
+        pojemnosc *= 2;
+        T *nowaTablica = new T[pojemnosc];
+        nowaTablica[0] = element;
+        for (int i = 0; i < ileElementow; i++) {
+            nowaTablica[i + 1] = przedmioty[i];
+        }
+        delete[] przedmioty;
+        przedmioty = nowaTablica;
+    } else {
+        for (int i = ileElementow; i > 0; i--) {
+            przedmioty[i] = przedmioty[i - 1];
+        }
+        przedmioty[0] = element;
     }
-    delete[] przedmioty;
-    przedmioty = nowaTablica;
     ileElementow++;
 }
 
@@ -125,5 +168,15 @@ T ArrayList<T>::pobierzElement(int index) {
         throw std::out_of_range("Niepoprawny indeks");
     }
     return przedmioty[index];
+}
+
+template<typename T>
+int ArrayList<T>::getIleElementow() {
+    return ileElementow;
+}
+
+template<typename T>
+int ArrayList<T>::getPojemnosc() {
+    return pojemnosc;
 }
 #endif //MINIPROJEKT_1_ARRAYLIST_H
