@@ -7,15 +7,11 @@
 #include <iomanip> // Dla std::fixed i std::setprecision
 
 #include "ArrayList.h"
-#include "LinkedList.h"
+#include "LinkedLists.h"
 #include "LinkedListWithTail.h"
-
-#include <time.h> //Do wywalenia
 
 using namespace std;
 using namespace std::chrono;
-
-clock_t start, stop; //Do wywalenia
 
 ifstream fin;
 ofstream fout;
@@ -134,20 +130,20 @@ int main() {
         }
         case 2: {
             cout << "Wybrano liste jednokierunkowa (head)" << endl;
-            LinkedList<int> lista;
-            for(int i = 0; i < ileElementow; i++){
-                lista.addFront(losujLiczbe(min, max)); 
-            }
-            lista.print(); 
+//            LinkedList<int> lista;
+//            for(int i = 0; i < ileElementow; i++){
+//                lista.addFront(losujLiczbe(min, max));
+//            }
+//            lista.print();
             break;
         }
         case 3: {
-              cout << "Wybrano liste jednokierunkowa (head, tail)" << endl;
-            LinkedListWithTail<int> lista;
-            for(int i = 0; i < ileElementow; i++){
-                lista.addBack(losujLiczbe(min, max)); 
-            }
-            lista.print();
+            cout << "Wybrano liste jednokierunkowa (head, tail)" << endl;
+//            LinkedListWithTail<int> lista;
+//            for(int i = 0; i < ileElementow; i++){
+//                lista.addBack(losujLiczbe(min, max));
+//            }
+//            lista.print();
             break;
         }
         case 4: {
