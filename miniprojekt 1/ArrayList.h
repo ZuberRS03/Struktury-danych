@@ -20,6 +20,8 @@ public:
     void print(); //metoda wypisująca elementy tablicy
     void clear(); //metoda czyszcząca tablicę
     int find(T element); //metoda wyszukująca element w tablicy
+    int getSize() { return size; } //metoda zwracająca liczbę elementów w tablicy
+    int getCapacity() { return capacity; } //metoda zwracająca pojemność tablicy
 };
 
 template<typename T>
@@ -30,10 +32,12 @@ ArrayList<T>::~ArrayList() {
 template<typename T>
 void ArrayList<T>::addEnd(T element) {
     if (size == capacity) { //jeżeli liczba elementów jest równa pojemności tablicy
-        if(capacity == 0)
+        if(capacity == 0) {
             capacity = 1; //jeżeli pojemność tablicy jest równa 0 to ustawiamy ją na 1 (pierwszy element w tablicy)
-        capacity *= 2; //podwajamy pojemność tablicy
-        T *nowaTablica = new T[capacity]; //tworzymy nową tablicę o 1 większą
+        } else {
+            capacity *= 2; //podwajamy pojemność tablicy
+        }
+        T *nowaTablica = new T[capacity]; //tworzymy nową tablicę 2 razy większą od poprzedniej
         for (int i = 0; i < size; i++) {  //przepisujemy elementy z tablicy przedmioty do nowej tablicy
             nowaTablica[i] = array[i];
         }
@@ -128,6 +132,7 @@ void ArrayList<T>::clear() {
     delete[] array;
     array = nullptr;
     size = 0;
+    capacity = 0;
 }
 
 template<typename T>
