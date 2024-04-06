@@ -26,6 +26,9 @@ public:
     // Metoda dodająca element na podanym indeksie
     void addAt(T data, int index);
 
+    // Metoda wyszukująca element w liście
+    int find(T element);
+
     // Metoda usuwająca element z początku listy
     void removeFront();
 
@@ -86,6 +89,20 @@ void LinkedList<T>::addAt(T data, int index) {
 }
 
 template<typename T>
+int LinkedList<T>::find(T element) {
+    Node<T>* temp = head;
+    int index = 0;
+    while (temp != nullptr) {
+        if (temp->data == element) {
+            return index;
+        }
+        temp = temp->next;
+        index++;
+    }
+    return -1;
+}
+
+template<typename T>
 void LinkedList<T>::removeFront() {
     if (head != nullptr) {
         Node<T>* temp = head;
@@ -111,6 +128,5 @@ void LinkedList<T>::clear() {
         removeFront();
     }
 }
-
 
 #endif // LINKEDLIST_H

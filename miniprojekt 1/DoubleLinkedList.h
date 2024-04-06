@@ -25,6 +25,9 @@ public:
     // Metoda dodająca element na podanym indeksie
     void addAt(T data, int index);
 
+    // Metoda wyszukująca element w liście
+    int find(T element);
+
     // Metoda usuwająca element z początku listy
     void removeFront();
 
@@ -136,6 +139,20 @@ void DoubleLinkedList<T>::addAt(T data, int index) {
         temp->next = newNode;
         size++;
     }
+}
+
+template<typename T>
+int DoubleLinkedList<T>::find(T element) {
+    Node<T>* temp = head;
+    int index = 0;
+    while (temp != nullptr) {
+        if (temp->data == element) {
+            return index;
+        }
+        temp = temp->next;
+        index++;
+    }
+    return -1; //jeden jesli element nie zostal znaleziony
 }
 
 #endif // DOUBLELINKEDLIST_H
