@@ -57,7 +57,7 @@ void wypelnijListeOdwrotnie(ListType& lista, const DataType dane[], int liczbaEl
 
 int main() {
 
-    const int liczbaPomiarow = 30; // Liczba pomiarów
+    const int liczbaPomiarow = 30; // Liczba pomiarów 30
     const int liczbaElementow = 100000; // Max liczba elementów w stróktórze danych 100000
     const int skokIlosciDanych = 5000; // Skok ilości danych 5000
 

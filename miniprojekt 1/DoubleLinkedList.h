@@ -12,171 +12,71 @@ private:
     int size;
 
 public:
+    // Konstruktor inicjalizujący listę jako pustą
     DoubleLinkedList() : head(nullptr), tail(nullptr), size(0) {}
 
+    // Destruktor zwalniający pamięć
     ~DoubleLinkedList();
 
-    // Metoda dodająca element na początku listy
+    /*
+     * @brief Metoda dodająca element na początku listy
+     * @param data - wartość elementu, który ma zostać dodany
+     * @return void
+     */
     void addFront(T data);
 
-    // Metoda dodająca element na końcu listy
+    /*
+     * @brief Metoda dodająca element na końcu listy
+     * @param data - wartość elementu, który ma zostać dodany
+     * @return void
+     */
     void addEnd(T data);
 
-    // Metoda dodająca element na podanym indeksie
+    /*
+     * @brief Metoda dodająca element na podanym indeksie
+     * @param data - wartość elementu, który ma zostać dodany
+     * @param index - indeks, na którym ma zostać dodany element
+     * @return void
+     */
     void addAt(T data, int index);
 
-    // Metoda wyszukująca element w liście
+    /*
+     * @brief Metoda wyszukująca element w liście
+     * @param element - element, który chcemy znaleźć
+     * @return int - indeks elementu w liście
+     */
     int find(T element);
 
-    // Metoda usuwająca element z początku listy
+    /*
+     * @brief Metoda usuwająca element z początku listy
+     * @return void
+     */
     void removeFront();
 
-    // Metoda usuwająca element z końca listy
+    /*
+     * @brief Metoda usuwająca element z końca listy
+     * @return void
+     */
     void removeEnd();
 
-    // Metoda usuwająca element na podanym indeksie
+    /*
+     * @brief Metoda usuwająca element na podanym indeksie
+     * @param index - indeks elementu, który chcemy usunąć
+     * @return void
+     */
     void removeAt(int index);
 
-    // Metoda wyświetlająca wszystkie elementy listy
+    /*
+     * @brief Metoda wyświetlająca wszystkie elementy listy
+     * @return void
+     */
     void print() const;
 
-    // Metoda czyszcząca listę
+    /*
+     * @brief Metoda czyszcząca listę
+     * @return void
+     */
     void clear();
 };
-
-template<typename T>
-DoubleLinkedList<T>::~DoubleLinkedList() {
-    clear();
-}
-
-template<typename T>
-void DoubleLinkedList<T>::addFront(T data) {
-
-    Node<T>* newNode = new Node<T>(data, nullptr, head);
-    if (head != nullptr) {
-        head->prev = newNode;
-    } else {
-        tail = newNode;
-    }
-    head = newNode;
-    size++;
-}
-
-template<typename T>
-void DoubleLinkedList<T>::addEnd(T data) {
-    Node<T>* newNode = new Node<T>(data, tail, nullptr);
-    if (tail != nullptr) {
-        tail->next = newNode;
-    } else {
-        head = newNode;
-    }
-    tail = newNode;
-    size++;
-}
-
-template<typename T>
-void DoubleLinkedList<T>::removeFront() {
-    if (head != nullptr) {
-        Node<T>* temp = head;
-        head = head->next;
-        if (head != nullptr) {
-            head->prev = nullptr;
-        } else {
-            tail = nullptr;
-        }
-        delete temp;
-        size--;
-    }
-}
-
-template<typename T>
-void DoubleLinkedList<T>::removeEnd() {
-    if (tail != nullptr) {
-        Node<T>* temp = tail;
-        tail = tail->prev;
-        if (tail != nullptr) {
-            tail->next = nullptr;
-        } else {
-            head = nullptr;
-        }
-        delete temp;
-        size--;
-    }
-}
-
-template<typename T>
-void DoubleLinkedList<T>::removeAt(int index) {
-    if (index < 0 || index >= size) {
-        throw std::out_of_range("Niepoprawny indeks");
-    }
-    if (index == 0) {
-        removeFront();
-    } else if (index == size - 1) {
-        removeEnd();
-    } else {
-        Node<T>* temp = head;
-        for (int i = 0; i < index; i++) {
-            temp = temp->next;
-        }
-        temp->prev->next = temp->next;
-        temp->next->prev = temp->prev;
-        delete temp;
-        size--;
-    }
-}
-
-template<typename T>
-void DoubleLinkedList<T>::print() const {
-    Node<T>* temp = head;
-    while (temp != nullptr) {
-        std::cout << temp->data << " ";
-        temp = temp->next;
-    }
-    std::cout << std::endl;
-}
-
-template<typename T>
-void DoubleLinkedList<T>::clear() {
-    while (head != nullptr) {
-        removeFront();
-    }
-}
-
-template<typename T>
-void DoubleLinkedList<T>::addAt(T data, int index) {
-    if (index < 0 || index > size) {
-        throw std::out_of_range("Niepoprawny indeks");
-    }
-    if (index == 0) {
-        addFront(data);
-    } else if (index == size) {
-        addEnd(data);
-    } else {
-        Node<T>* newNode = new Node<T>(data);
-        Node<T>* temp = head;
-        for (int i = 0; i < index - 1; i++) {
-            temp = temp->next;
-        }
-        newNode->next = temp->next;
-        newNode->prev = temp;
-        temp->next->prev = newNode;
-        temp->next = newNode;
-        size++;
-    }
-}
-
-template<typename T>
-int DoubleLinkedList<T>::find(T element) {
-    Node<T>* temp = head;
-    int index = 0;
-    while (temp != nullptr) {
-        if (temp->data == element) {
-            return index;
-        }
-        temp = temp->next;
-        index++;
-    }
-    return -1; //jeden jesli element nie zostal znaleziony
-}
 
 #endif // DOUBLELINKEDLIST_H
