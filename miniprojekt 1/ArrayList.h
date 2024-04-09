@@ -16,7 +16,9 @@ public:
     void addEnd(T element); //metoda dodająca element do tablicy na końcu
     void addAt(T element, int index); //metoda dodająca element na podanym indeksie
     void addFront(T element); //metoda dodająca element na początku tablicy
-    void usunElement(int index); //metoda usuwająca element z tablicy
+    void removeEnd(); //metoda usuwająca ostatni element z tablicy
+    void removeAt(int index); //metoda usuwająca element z tablicy
+    void removeFront(); //metoda usuwająca pierwszy element z tablicy
     void print(); //metoda wypisująca elementy tablicy
     void clear(); //metoda czyszcząca tablicę
     int find(T element); //metoda wyszukująca element w tablicy
@@ -102,20 +104,33 @@ void ArrayList<T>::addFront(T element) {
 }
 
 template<typename T>
-void ArrayList<T>::usunElement(int index) {
+void ArrayList<T>::removeEnd() {
+    if (size == 0) {
+        throw std::out_of_range("Tablica jest pusta");
+    }
+    size--;
+}
+
+template<typename T>
+void ArrayList<T>::removeAt(int index) {
     //zapezpieczenie przed wyjściem poza zakres tablicy
     if (index < 0 || index >= size) {
         throw std::out_of_range("Niepoprawny indeks");
     }
-    T *nowaTablica = new T[size - 1];
-    for (int i = 0; i < index; i++) {
-        nowaTablica[i] = array[i];
+    for (int i = index; i < size - 1; i++) {
+        array[i] = array[i + 1];
     }
-    for (int i = index + 1; i < size; i++) {
-        nowaTablica[i - 1] = array[i];
+    size--;
+}
+
+template<typename T>
+void ArrayList<T>::removeFront() {
+    if (size == 0) {
+        throw std::out_of_range("Tablica jest pusta");
     }
-    delete[] array;
-    array = nowaTablica;
+    for (int i = 0; i < size - 1; i++) {
+        array[i] = array[i + 1];
+    }
     size--;
 }
 

@@ -34,6 +34,9 @@ public:
     // Metoda usuwająca element z końca listy
     void removeEnd();
 
+    // Metoda usuwająca element na podanym indeksie
+    void removeAt(int index);
+
     // Metoda wyświetlająca wszystkie elementy listy
     void print() const;
 
@@ -96,6 +99,27 @@ void DoubleLinkedList<T>::removeEnd() {
         } else {
             head = nullptr;
         }
+        delete temp;
+        size--;
+    }
+}
+
+template<typename T>
+void DoubleLinkedList<T>::removeAt(int index) {
+    if (index < 0 || index >= size) {
+        throw std::out_of_range("Niepoprawny indeks");
+    }
+    if (index == 0) {
+        removeFront();
+    } else if (index == size - 1) {
+        removeEnd();
+    } else {
+        Node<T>* temp = head;
+        for (int i = 0; i < index; i++) {
+            temp = temp->next;
+        }
+        temp->prev->next = temp->next;
+        temp->next->prev = temp->prev;
         delete temp;
         size--;
     }

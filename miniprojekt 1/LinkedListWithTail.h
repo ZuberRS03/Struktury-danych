@@ -33,6 +33,12 @@ public:
     // Metoda usuwająca element z początku listy
     void removeFront();
 
+    // Metoda usuwająca element z końca listy
+    void removeEnd();
+
+    // Metoda usuwająca element na podanym indeksie
+    void removeAt(int index);
+
     // Metoda wyświetlająca wszystkie elementy listy
     void print();
 
@@ -115,6 +121,44 @@ void LinkedListWithTail<T>::removeFront() {
     }
     delete temp;
     size--;
+}
+
+template<typename T>
+void LinkedListWithTail<T>::removeEnd() {
+    if (head == nullptr) return;
+    if (head == tail) {
+        delete head;
+        head = tail = nullptr;
+    } else {
+        Node<T>* temp = head;
+        while (temp->next != tail) {
+            temp = temp->next;
+        }
+        delete tail;
+        tail = temp;
+        tail->next = nullptr;
+    }
+}
+
+template<typename T>
+void LinkedListWithTail<T>::removeAt(int index) {
+    if (index < 0 || index >= size) {
+        throw std::out_of_range("Niepoprawny indeks");
+    }
+    if (index == 0) {
+        removeFront();
+    } else if (index == size - 1) {
+        removeEnd();
+    } else {
+        Node<T>* temp = head;
+        for (int i = 0; i < index - 1; i++) {
+            temp = temp->next;
+        }
+        Node<T>* toDelete = temp->next;
+        temp->next = temp->next->next;
+        delete toDelete;
+        size--;
+    }
 }
 
 template<typename T>
