@@ -17,100 +17,67 @@ public:
     // Destruktor zwalniający pamięć
     ~LinkedList();
 
-    // Metoda dodająca element na początku listy
+    /*
+     * @brief Metoda dodająca element na początku listy
+     * @param data - wartość elementu, który ma zostać dodany
+     * @return void
+     */
     void addFront(T data);
 
-    // Metoda dodająca element na końcu listy
+    /*
+     * @brief Metoda dodająca element na końcu listy
+     * @param data - wartość elementu, który ma zostać dodany
+     * @return void
+     */
     void addEnd(T data);
 
-    // Metoda dodająca element na podanym indeksie
+    /*
+     * @brief Metoda dodająca element na podanym indeksie
+     * @param data - wartość elementu, który ma zostać dodany
+     * @param index - indeks, na którym ma zostać dodany element
+     * @return void
+     */
     void addAt(T data, int index);
 
-    // Metoda usuwająca element z początku listy
+    /*
+     * @brief Metoda wyszukująca element w liście
+     * @param element - element, który chcemy znaleźć
+     * @return int - indeks elementu w liście
+     */
+    int find(T element);
+
+    /*
+     * @brief Metoda usuwająca element z początku listy
+     * @return void
+     */
     void removeFront();
 
-    // Metoda wyświetlająca wszystkie elementy listy
+    /*
+     * @brief Metoda usuwająca element z końca listy
+     * @return void
+     */
+    void removeEnd();
+
+    /*
+     * @brief Metoda usuwająca element na podanym indeksie
+     * @param index - indeks elementu, który chcemy usunąć
+     * @return void
+     */
+    void removeAt(int index);
+
+    /*
+     * @brief Metoda wyświetlająca wszystkie elementy listy
+     * @return void
+     */
     void print();
 
-    // Metoda czyszcząca listę
+    /*
+     * @brief Metoda czyszcząca listę
+     * @return void
+     */
     void clear();
 };
 
-template<typename T>
-LinkedList<T>::~LinkedList() {
-    clear();
-}
-
-template<typename T>
-void LinkedList<T>::addFront(T data) {
-    Node<T>* newNode = new Node<T>(data, head);
-    newNode->next = head;
-    head = newNode;
-    size++;
-}
-
-template<typename T>
-void LinkedList<T>::addEnd(T data) {
-    Node<T>* newNode = new Node<T>(data);
-    if (head == nullptr) {
-        head = newNode;
-    } else {
-        Node<T>* temp = head;
-        while (temp->next != nullptr) {
-            temp = temp->next;
-        }
-        temp->next = newNode;
-    }
-    size++;
-}
-
-template<typename T>
-void LinkedList<T>::addAt(T data, int index) {
-    if (index < 0 || index > size) {
-        throw std::out_of_range("Niepoprawny indeks");
-    }
-    if (index == 0) {
-        addFront(data);
-    } else if (index == size) {
-        addEnd(data);
-    } else {
-        Node<T>* newNode = new Node<T>(data);
-        Node<T>* temp = head;
-        for (int i = 0; i < index - 1; i++) {
-            temp = temp->next;
-        }
-        newNode->next = temp->next;
-        temp->next = newNode;
-        size++;
-    }
-}
-
-template<typename T>
-void LinkedList<T>::removeFront() {
-    if (head != nullptr) {
-        Node<T>* temp = head;
-        head = head->next;
-        delete temp;
-        size--;
-    }
-}
-
-template<typename T>
-void LinkedList<T>::print() {
-    Node<T>* temp = head;
-    while (temp != nullptr) {
-        std::cout << temp->data << " ";
-        temp = temp->next;
-    }
-    std::cout << std::endl;
-}
-
-template<typename T>
-void LinkedList<T>::clear() {
-    while (head != nullptr) {
-        removeFront();
-    }
-}
 
 
 #endif // LINKEDLIST_H

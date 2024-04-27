@@ -3,136 +3,80 @@
 
 #include "Node.h"
 #include <iostream>
-#include <stdexcept>
 
 template <typename T>
 class LinkedListWithTail {
 private:
-    Node<T>* head;
-    Node<T>* tail;
+    Node<T>* head; // Głowa listy, czyli pierwszy element
+    Node<T>* tail; // Ogon listy, czyli ostatni element
     int size;
 
 public:
-    LinkedListWithTail();
+    // Konstruktor inicjalizujący listę jako pustą
+    LinkedListWithTail() : head(nullptr), tail(nullptr), size(0) {}
 
+    // Destruktor zwalniający pamięć
     ~LinkedListWithTail();
 
+    /*
+     * @brief Metoda dodająca element na początku listy
+     * @param data - wartość elementu, który ma zostać dodany
+     * @return void
+     */
     void addFront(T data);
 
-    void addBack(T data);
+    /*
+     * @brief Metoda dodająca element na końcu listy
+     * @param data - wartość elementu, który ma zostać dodany
+     * @return void
+     */
+    void addEnd(T data);
 
+    /*
+     * @brief Metoda dodająca element na podanym indeksie
+     * @param data - wartość elementu, który ma zostać dodany
+     * @param index - indeks, na którym ma zostać dodany element
+     * @return void
+     */
     void addAt(T data, int index);
 
+    /*
+     * @brief Metoda wyszukująca element w liście
+     * @param element - element, który chcemy znaleźć
+     * @return int - indeks elementu w liście
+     */
+    int find(T element);
+
+    /*
+     * @brief Metoda usuwająca element z początku listy
+     * @return void
+     */
     void removeFront();
 
+    /*
+     * @brief Metoda usuwająca element z końca listy
+     * @return void
+     */
+    void removeEnd();
+
+    /*
+     * @brief Metoda usuwająca element na podanym indeksie
+     * @param index - indeks elementu, który chcemy usunąć
+     * @return void
+     */
+    void removeAt(int index);
+
+    /*
+     * @brief Metoda wyświetlająca wszystkie elementy listy
+     * @return void
+     */
     void print();
 
+    /*
+     * @brief Metoda czyszcząca listę
+     * @return void
+     */
     void clear();
 };
-
-template<typename T>
-LinkedListWithTail<T>::LinkedListWithTail() : head(nullptr), tail(nullptr), size(0) {
-
-}
-
-template<typename T>
-LinkedListWithTail<T>::~LinkedListWithTail() {
-    clear();
-}
-
-template<typename T>
-void LinkedListWithTail<T>::addFront(T data) {
-    // Implementacja metody addFront
-     void addFront(T data) {
-        Node<T>* newNode = new Node<T>(data);
-        newNode->next = head;
-        head = newNode;
-        if (tail == nullptr) {
-            tail = head;
-        }
-        size++;
-    }
-}
-
-template<typename T>
-void LinkedListWithTail<T>::addBack(T data) {
-    // Implementacja metody addBack
-    void addBack(T data) {
-        Node<T>* newNode = new Node<T>(data);
-        if (tail == nullptr) {
-            head = tail = newNode;
-        } else {
-            tail->next = newNode;
-            tail = newNode;
-        }
-        size++;
-    }
-}
-
-template<typename T>
-void LinkedListWithTail<T>::addAt(T data, int index) {
-    // Implementacja metody addAt
-    void addAt(T data, int index) {
-        if (index < 0 || index > size) {
-            throw std::out_of_range("Index out of range");
-        }
-        if (index == 0) {
-            addFront(data);
-            return;
-        }
-        if (index == size) {
-            addBack(data);
-            return;
-        }
-        Node<T>* newNode = new Node<T>(data);
-        Node<T>* current = head;
-        for (int i = 0; i < index - 1; ++i) {
-            current = current->next;
-        }
-        newNode->next = current->next;
-        current->next = newNode;
-        size++;
-    }
-}
-
-template<typename T>
-void LinkedListWithTail<T>::removeFront() {
-    // Implementacja metody removeFront
-    void removeFront() {
-        if (head == nullptr) return;
-        Node<T>* temp = head;
-        head = head->next;
-        delete temp;
-        if (head == nullptr) {
-            tail = nullptr;
-        }
-        size--;
-    }
-}
-
-template<typename T>
-void LinkedListWithTail<T>::print() {
-    // Implementacja metody print
-    void print() {
-        Node<T>* temp = head;
-        while (temp != nullptr) {
-            std::cout << temp->data << " ";
-            temp = temp->next;
-        }
-        std::cout << "\n";
-    }
-}
-
-template<typename T>
-void LinkedListWithTail<T>::clear() {
-    // Implementacja metody clear
-    void clear() {
-        while (head != nullptr) {
-            removeFront();
-        }
-        size = 0;
-    }
-
-}
 
 #endif // LINKEDLISTWITHTAIL_H

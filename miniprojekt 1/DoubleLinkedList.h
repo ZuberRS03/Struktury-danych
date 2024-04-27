@@ -3,7 +3,6 @@
 
 #include "Node.h"
 #include <iostream>
-#include <stdexcept>
 
 template<typename T>
 class DoubleLinkedList {
@@ -13,162 +12,71 @@ private:
     int size;
 
 public:
-    DoubleLinkedList();
+    // Konstruktor inicjalizujący listę jako pustą
+    DoubleLinkedList() : head(nullptr), tail(nullptr), size(0) {}
 
+    // Destruktor zwalniający pamięć
     ~DoubleLinkedList();
 
+    /*
+     * @brief Metoda dodająca element na początku listy
+     * @param data - wartość elementu, który ma zostać dodany
+     * @return void
+     */
     void addFront(T data);
 
-    void addBack(T data);
+    /*
+     * @brief Metoda dodająca element na końcu listy
+     * @param data - wartość elementu, który ma zostać dodany
+     * @return void
+     */
+    void addEnd(T data);
 
+    /*
+     * @brief Metoda dodająca element na podanym indeksie
+     * @param data - wartość elementu, który ma zostać dodany
+     * @param index - indeks, na którym ma zostać dodany element
+     * @return void
+     */
     void addAt(T data, int index);
 
+    /*
+     * @brief Metoda wyszukująca element w liście
+     * @param element - element, który chcemy znaleźć
+     * @return int - indeks elementu w liście
+     */
+    int find(T element);
+
+    /*
+     * @brief Metoda usuwająca element z początku listy
+     * @return void
+     */
     void removeFront();
 
-    void removeBack();
+    /*
+     * @brief Metoda usuwająca element z końca listy
+     * @return void
+     */
+    void removeEnd();
 
-    void printForward() const;
+    /*
+     * @brief Metoda usuwająca element na podanym indeksie
+     * @param index - indeks elementu, który chcemy usunąć
+     * @return void
+     */
+    void removeAt(int index);
 
-    void printBackward() const;
+    /*
+     * @brief Metoda wyświetlająca wszystkie elementy listy
+     * @return void
+     */
+    void print() const;
 
+    /*
+     * @brief Metoda czyszcząca listę
+     * @return void
+     */
     void clear();
 };
-
-template<typename T>
-DoubleLinkedList<T>::DoubleLinkedList() : head(nullptr), tail(nullptr), size(0) {
-
-}
-
-template<typename T>
-DoubleLinkedList<T>::~DoubleLinkedList() {
-    clear();
-}
-
-template<typename T>
-void DoubleLinkedList<T>::addFront(T data) {
-    // Implementacja metody addFront
-    void addFront(T data) {
-        Node<T>* newNode = new Node<T>(data, nullptr, head);
-        if (head != nullptr) {
-            head->prev = newNode;
-        } else {
-            tail = newNode;
-        }
-        head = newNode;
-        size++;
-    }
-}
-
-template<typename T>
-void DoubleLinkedList<T>::addBack(T data) {
-    // Implementacja metody addBack
-    void addBack(T data) {
-        Node<T>* newNode = new Node<T>(data, tail, nullptr);
-        if (tail != nullptr) {
-            tail->next = newNode;
-        } else {
-            head = newNode;
-        }
-        tail = newNode;
-        size++;
-    }
-}
-
-template<typename T>
-void DoubleLinkedList<T>::addAt(T data, int index) {
-    // Implementacja metody addAt
-    void addAt(T data, int index) {
-        if (index < 0 || index > size) {
-            throw std::out_of_range("Index out of range");
-        }
-        if (index == 0) {
-            addFront(data);
-            return;
-        }
-        if (index == size) {
-            addBack(data);
-            return;
-        }
-        Node<T>* temp = head;
-        for (int i = 0; i < index - 1; ++i) {
-            temp = temp->next;
-        }
-        Node<T>* newNode = new Node<T>(data, temp, temp->next);
-        temp->next->prev = newNode;
-        temp->next = newNode;
-        size++;
-    }
-}
-
-template<typename T>
-void DoubleLinkedList<T>::removeFront() {
-    // Implementacja metody removeFront
-    void removeFront() {
-        if (head == nullptr) return;
-        Node<T>* temp = head;
-        head = head->next;
-        if (head != nullptr) {
-            head->prev = nullptr;
-        } else {
-            tail = nullptr;
-        }
-        delete temp;
-        size--;
-    }
-}
-
-template<typename T>
-void DoubleLinkedList<T>::removeBack() {
-    // Implementacja metody removeBack
-    void removeBack() {
-        if (tail == nullptr) return;
-        Node<T>* temp = tail;
-        tail = tail->prev;
-        if (tail != nullptr) {
-            tail->next = nullptr;
-        } else {
-            head = nullptr;
-        }
-        delete temp;
-        size--;
-    }
-}
-
-template<typename T>
-void DoubleLinkedList<T>::printForward() const {
-    // Implementacja metody printForward
-    void printForward() const {
-        Node<T>* temp = head;
-        while (temp != nullptr) {
-            std::cout << temp->data << " ";
-            temp = temp->next;
-        }
-        std::cout << "\n";
-    }
-}
-
-template<typename T>
-void DoubleLinkedList<T>::printBackward() const {
-    // Implementacja metody printBackward
-    void printBackward() const {
-        Node<T>* temp = tail;
-        while (temp != nullptr) {
-            std::cout << temp->data << " ";
-            temp = temp->prev;
-        }
-        std::cout << "\n";
-    }
-}
-
-template<typename T>
-void DoubleLinkedList<T>::clear() {
-    // Implementacja metody clear
-    void clear() {
-        while (head != nullptr) {
-            removeFront();
-        }
-        size = 0;
-    }
-}
 
 #endif // DOUBLELINKEDLIST_H
