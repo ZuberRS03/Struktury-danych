@@ -1,7 +1,7 @@
-#include <iostream>
-#include <fstream>
-#include <chrono>
-#include <cstdlib>
+#include <iostream> //do obsługi strumieni wejścia/wyjścia
+#include <fstream> //do obsługi plików
+#include <chrono> //do mierzenia czasu
+#include <cstdlib> //do losowania liczb
 #include <vector>
 
 #include "MaxHeap.h"
@@ -29,14 +29,41 @@ int losujLiczbe(int min, int max) {
     return rand() % (max - min + 1) + min;
 }
 
+using namespace std;
+
+ifstream fin;
+ofstream fout;
+
+//funkcja do wyboru kolejki
+int menuKolejki() {
+    int wybor;
+    cout << "----------Wybor kolejki priorytetowej----------\n";
+    cout << "1. Max Heap\n";
+    cout << "2. AVL Tree\n";
+    cout << "3. Exit\n";
+    cout << "-----------------------------------------------\n";
+    cout << "Wybor ";
+    cin >> wybor;
+    return wybor;
+}
+
+//funkcja losująca liczbę z przedziału <min, max>
+int losujLiczbe(int min, int max){
+    return rand() % (max - min + 1) + min;
+}
+
 int main() {
     srand(time(nullptr));  // Inicjalizacja generatora liczb losowych
-    const int liczbaPomiarow = 30;
-    const int liczbaElementow = 100000;
-    const int skokIlosciDanych = 5000;
+    //podatawowe dane do badan
+    const int liczbaPomiarow = 30; // Liczba pomiarów 30
+    const int liczbaElementow = 100000; // Max liczba elementów w stróktórze danych 100000
+    const int skokIlosciDanych = 5000; // Skok ilości danych 5000
     const int maxPriority = liczbaElementow * 10;
 
+    //wybor kolejki
     int wybranaKolejka = menuKolejki();
+  
+    //Ewentualne wczytanie danych z pliku
 
     switch (wybranaKolejka) {
         case 1: {
@@ -84,6 +111,7 @@ int main() {
             fout.close();
             break;
         }
+
         case 2: {
             fout.open("wynikiBSTTree.txt");
             fout << "Liczba elementow;Czas insert(e,p);Czas extract-max();Czas find-max();Czas modify-key(e,p);Czas return-size()\n";
@@ -124,20 +152,21 @@ int main() {
                 auto returnSizeDuration = duration_cast<milliseconds>(stop - start).count();
 
                 fout << startElementow << ";" << insertDuration << ";" << extractMaxDuration << ";" << findMaxDuration << ";" << modifyKeyDuration << ";" << returnSizeDuration << "\n";
+
             }
 
             fout.close();
             break;
         }
-        case 3: {
+
+        case 3:{
             cout << "Koniec programu\n";
             break;
         }
-        default: {
+        default:{
             cout << "Niepoprawny wybor\n";
             break;
         }
     }
-
     return 0;
 }
