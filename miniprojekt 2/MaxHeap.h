@@ -1,17 +1,24 @@
 #ifndef MAXHEAP_H
 #define MAXHEAP_H
 
-#include <queue>
+#include <vector>
+#include <algorithm>
+#include <stdexcept>
 
 class MaxHeap {
 private:
-    std::priority_queue<int> pq;
+    std::vector<std::pair<int, int>> heap;
+
+    void heapifyUp(int index);
+    void heapifyDown(int index);
+    int findIndex(int e);
 
 public:
-    void insert(int element);
-    int findMax();
-    void removeMax();
-    bool isEmpty();
+    void insert(int e, int p);
+    std::pair<int, int> extractMax();
+    std::pair<int, int> findMax() const;
+    void modifyKey(int e, int newP);
+    size_t returnSize() const;
 };
 
 #endif

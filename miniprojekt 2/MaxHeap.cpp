@@ -1,28 +1,62 @@
 #include "MaxHeap.h"
-#include <stdexcept>  // Include to use std::runtime_error
 
-void MaxHeap::insert(int element) {
-    // Adds an element to the heap; priority_queue will automatically order it in max-heap order
-    pq.push(element);
+void MaxHeap::insert(int e, int p) {
+    heap.push_back({e, p});
+    heapifyUp(heap.size() - 1);
 }
 
-int MaxHeap::findMax() {
-    // Returns the largest element from the heap without removing it
-    if (isEmpty()) {
-        throw std::runtime_error("Heap is empty"); 
+std::pair<int, int> MaxHeap::extractMax() {
+    if (heap.empty()) throw std::runtime_error("Heap is empty");
+    std::swap(heap[0], heap.back());
+    auto maxElement = heap.back();
+    heap.pop_back();
+    heapifyDown(0);
+    return maxElement;
+}
+
+std::pair<int, int> MaxHeap::findMax() const {
+    if (heap.empty()) throw std::runtime_error("Heap is empty");
+    return heap[0];
+}
+
+void MaxHeap::modifyKey(int e, int newP) {
+    int index = findIndex(e);
+    if (index == -1) throw std::runtime_error("Element not found");
+    heap[index].second = newP;
+    heapifyUp(index);
+    heapifyDown(index);
+}
+
+size_t MaxHeap::returnSize() const {
+    return heap.size();
+}
+
+void MaxHeap::heapifyUp(int index) {
+    while (index > 0 && heap[index].second > heap[(index - 1) / 2].second) {
+        std::swap(heap[index], heap[(index - 1) / 2]);
+        index = (index - 1) / 2;
     }
-    return pq.top();
 }
 
-void MaxHeap::removeMax() {
-    // Removes the largest element from the heap; priority_queue will automatically reorder
-    if (isEmpty()) {
-        throw std::runtime_error("Heap is empty"); 
+void MaxHeap::heapifyDown(int index) {
+    int left = 2 * index + 1;
+    int right = 2 * index + 2;
+    int largest = index;
+    if (left < heap.size() && heap[left].second > heap[largest].second) {
+        largest = left;
     }
-    pq.pop();
+    if (right < heap.size() && heap[right].second > heap[largest].second) {
+        largest = right;
+    }
+    if (largest != index) {
+        std::swap(heap[index], heap[largest]);
+        heapifyDown(largest);
+    }
 }
 
-bool MaxHeap::isEmpty() {
-    // Checks if the heap is empty
-    return pq.empty();
+int MaxHeap::findIndex(int e) {
+    for (int i = 0; i < heap.size(); i++) {
+        if (heap[i].first == e) return i;
+    }
+    return -1;
 }
