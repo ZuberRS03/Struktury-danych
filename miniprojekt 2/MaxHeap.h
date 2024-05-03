@@ -1,6 +1,7 @@
 #ifndef MAXHEAP_H
 #define MAXHEAP_H
 
+#include <iostream>
 #include <vector>
 #include <algorithm>
 #include <stdexcept>
@@ -19,6 +20,8 @@ public:
     std::pair<int, int> findMax() const;
     void modifyKey(int e, int newP);
     size_t returnSize() const;
+    void printHeap() const;
+    void clearHeap();
 };
 
 #endif

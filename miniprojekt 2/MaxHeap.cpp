@@ -60,3 +60,13 @@ int MaxHeap::findIndex(int e) {
     }
     return -1;
 }
+
+void MaxHeap::printHeap() const {
+    for (const auto& elem : heap) {
+        std::cout << elem.first << " " << elem.second << std::endl;
+    }
+}
+
+void MaxHeap::clearHeap() {
+    heap.clear();
+}
