@@ -46,7 +46,8 @@ int main() {
     const int liczbaPomiarow = 4; // Liczba pomiarów 30
     const int liczbaElementow = 5; // Max liczba elementów w stróktórze danych 100000
     const int skokIlosciDanych = 1; // Skok ilości danych 5000
-    const int maxPriority = liczbaElementow * 10;
+    //const int maxPriority = liczbaElementow * 10;
+    const int maxPriority = 10;
 
     //wybor kolejki
     int wybranaKolejka = menuKolejki();
@@ -64,40 +65,83 @@ int main() {
 
                 //pomiar czasu Insert
                 double czasInsert = 0.0;
-//                for(int i = 0; i < liczbaPomiarow; i++) {
-//                    wypelnijKolejkeMaxHeap(heap[i], startElementow, maxPriority); //wypełnienie kolejki losowymi danymi
+                for(int i = 0; i < liczbaPomiarow; i++) {
+                    wypelnijKolejkeMaxHeap(heap[i], startElementow, maxPriority); //wypełnienie kolejki losowymi danymi
 //                        cout << "Kolejka przed insertem: " << i << endl;
 //                        heap[i].printHeap();
-//                    auto start = high_resolution_clock::now(); //początek pomiaru czasu
-//                    heap[i].insert(losujLiczbe(1, startElementow), losujLiczbe(1, maxPriority)); //dodanie losowego elementu do kolejki
-//                    auto stop = high_resolution_clock::now(); //koniec pomiaru czasu
+                    auto start = high_resolution_clock::now(); //początek pomiaru czasu
+                    heap[i].insert(losujLiczbe(1, startElementow), losujLiczbe(1, maxPriority)); //dodanie losowego elementu do kolejki
+                    auto stop = high_resolution_clock::now(); //koniec pomiaru czasu
 //                        cout << "Kolejka po insert: " << i << endl;
 //                        heap[i].printHeap();
 //                        cout << "-------------------------------" << endl;
-//                    czasInsert += duration_cast<milliseconds>(stop - start).count(); //dodanie czasu do sumy
-//                }
-//                czasInsert /= liczbaPomiarow; //średni czas Insert
+                    czasInsert += duration_cast<milliseconds>(stop - start).count(); //dodanie czasu do sumy
+                }
+                czasInsert /= liczbaPomiarow; //średni czas Insert
 
                 //pomiar czasu ExtractMax
                 double czasExtractMax = 0.0;
-//                for(int i = 0; i < liczbaPomiarow; i++) {
-//                    wypelnijKolejkeMaxHeap(heap[i], startElementow, maxPriority); //wypełnienie kolejki losowymi danymi
+                for(int i = 0; i < liczbaPomiarow; i++) {
+                    wypelnijKolejkeMaxHeap(heap[i], startElementow, maxPriority); //wypełnienie kolejki losowymi danymi
 //                        cout << "Kolejka przed extractMax: " << i << endl;
 //                        heap[i].printHeap();
-//                    auto start = high_resolution_clock::now();
-//                    heap[i].extractMax(); //usunięcie maksymalnego elementu z kolejki
-//                    auto stop = high_resolution_clock::now();
+                    auto start = high_resolution_clock::now();
+                    heap[i].extractMax(); //usunięcie maksymalnego elementu z kolejki
+                    auto stop = high_resolution_clock::now();
 //                        cout << "Kolejka po extractMax: " << i << endl;
 //                        heap[i].printHeap();
 //                        cout << "-------------------------------" << endl;
-//                    czasExtractMax += duration_cast<milliseconds>(stop - start).count();
-//                }
-//                czasExtractMax /= liczbaPomiarow; //średni czas ExtractMax
+                    czasExtractMax += duration_cast<milliseconds>(stop - start).count();
+                }
+                czasExtractMax /= liczbaPomiarow; //średni czas ExtractMax
 
                 //pomiar czasu FindMax
                 double czasFindMax = 0.0;
+                for(int i = 0; i < liczbaPomiarow; i++) {
+                    wypelnijKolejkeMaxHeap(heap[i], startElementow, maxPriority); //wypełnienie kolejki losowymi danymi
+//                        cout << "Kolejka przed findMax: " << i << endl;
+//                        heap[i].printHeap();
+                    auto start = high_resolution_clock::now();
+                    heap[i].findMax(); //znalezienie maksymalnego elementu w kolejce
+                    auto stop = high_resolution_clock::now();
+//                        cout << "Wynik dla findMax: " << i << endl;
+//                        pair<int, int> maxElement = heap[i].findMax();
+//                        cout << "Maksymalny element w kopcu to: " << maxElement.first << " z priorytetem: " << maxElement.second << endl;
+//                        cout << "-------------------------------" << endl;
+                    czasFindMax += duration_cast<milliseconds>(stop - start).count();
+                }
+                czasFindMax /= liczbaPomiarow; //średni czas FindMax
+
+                //pomiar czasu ModifyKey
                 double czasModifyKey = 0.0;
+                for(int i = 0; i < liczbaPomiarow; i++) {
+                    wypelnijKolejkeMaxHeap(heap[i], startElementow, maxPriority); //wypełnienie kolejki losowymi danymi
+//                        cout << "Kolejka przed modifyKey: " << i << endl;
+//                        heap[i].printHeap();
+                    auto start = high_resolution_clock::now();
+                    heap[i].modifyKey(losujLiczbe(0,startElementow - 1), losujLiczbe(1, maxPriority)); //zmiana priorytetu losowego elementu
+                    auto stop = high_resolution_clock::now();
+//                        cout << "Kolejka po modifyKey: " << i << endl;
+//                        heap[i].printHeap();
+//                        cout << "-------------------------------" << endl;
+                    czasModifyKey += duration_cast<milliseconds>(stop - start).count();
+                }
+                czasModifyKey /= liczbaPomiarow; //średni czas ModifyKey
+
+                //pomiar czasu ReturnSize
                 double czasReturnSize = 0.0;
+                for(int i = 0; i < liczbaPomiarow; i++) {
+                    wypelnijKolejkeMaxHeap(heap[i], startElementow, maxPriority); //wypełnienie kolejki losowymi danymi
+//                        cout << "Kolejka przed returnSize: " << i << endl;
+//                        heap[i].printHeap();
+                    auto start = high_resolution_clock::now();
+                    heap[i].returnSize(); //zwrócenie rozmiaru kolejki
+                    auto stop = high_resolution_clock::now();
+//                        cout << "Rozmiar kopca to: " << heap[i].returnSize() << endl;
+//                        cout << "-------------------------------" << endl;
+                    czasReturnSize += duration_cast<milliseconds>(stop - start).count();
+                }
+                czasReturnSize /= liczbaPomiarow; //średni czas ReturnSize
 
                 fout << startElementow << ";" << czasInsert << ";" << czasExtractMax << ";" << czasFindMax << ";" << czasModifyKey << ";" << czasReturnSize << "\n";
             }
