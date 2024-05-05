@@ -20,7 +20,7 @@ public:
     std::pair<int, int> findMax() const;
     void modifyKey(int e, int newP);
     size_t returnSize() const;
-    void printHeap() const;
+    void print() const;
     void clearHeap();
 };
 

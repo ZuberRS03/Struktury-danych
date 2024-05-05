@@ -1,6 +1,7 @@
 #ifndef BSTTREE_H
 #define BSTTREE_H
 
+#include <iostream>
 #include <stdexcept>
 #include <utility>
 
@@ -21,6 +22,7 @@ private:
     Node* findMax(Node* node) const;
     Node* remove(Node* node, int value);
     void clear(Node* node);
+    void print(Node* node) const;
 
 public:
     BSTTree();
@@ -30,6 +32,8 @@ public:
     std::pair<int, int> findMax() const;
     void modifyKey(int value, int newPriority);
     int returnSize() const;
+    void clear();
+    void print() const;
 };
 
 #endif

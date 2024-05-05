@@ -92,3 +92,22 @@ BSTTree::Node* BSTTree::remove(Node* node, int value) {
 int BSTTree::returnSize() const {
     return treeSize;
 }
+
+void BSTTree::clear() {
+    clear(root);
+    root = nullptr;
+    treeSize = 0;
+}
+
+void BSTTree::print() const {
+    print(root);
+    std::cout << std::endl;
+}
+
+void BSTTree::print(Node* node) const {
+    if (node) {
+        print(node->left);
+        std::cout << node->value << " " << node->priority << std::endl;
+        print(node->right);
+    }
+}
