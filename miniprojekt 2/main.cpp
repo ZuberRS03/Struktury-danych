@@ -34,28 +34,21 @@ int losujLiczbe(int min, int max) {
 
 //funkcja wypełniająca kolejkę losowymi danymi
 //funkcja do przerobienia na dane z pliku
-void wypelnijKolejkeMaxHeap(MaxHeap &heap, int liczbaElementow, int maxPriority) {
+void wypelnijKolejkeMaxHeap(MaxHeap &heap, int liczbaElementow, int listaDanych[][2]) {
     heap.clearHeap();
     for (int i = 0; i < liczbaElementow; i++) {
-        heap.insert(i, losujLiczbe(1, maxPriority));
+        heap.insert(listaDanych[i][0], listaDanych[i][1]);
     }
 }
 
 //funkcja wypełniająca kolejkę losowymi danymi
 //funkcja do przerobienia na dane z pliku
-void wypelnijKolejkeBST(BSTTree &bst, int liczbaElementow, int maxPriority) {
+void wypelnijKolejkeBST(BSTTree &bst, int liczbaElementow, int listaDanych[][2]) {
     bst.clear();
     for (int i = 0; i < liczbaElementow; i++) {
-        bst.insert(i, losujLiczbe(1, maxPriority));
+        bst.insert(listaDanych[i][0], listaDanych[i][1]);
     }
 }
-
-//
-//            for(int startElementow = 0; startElementow < liczbaElementow; startElementow += skokIlosciDanych) {
-//                vector<pair<int, int>> elementsToInsert;
-//                for (int i = 0; i < startElementow; i++) {
-//                    elementsToInsert.push_back({i, losujLiczbe(1, maxPriority)});
-//                }
 
 int main() {
     srand(time(nullptr));  // Inicjalizacja generatora liczb losowych
@@ -69,7 +62,12 @@ int main() {
     //wybor kolejki
     int wybranaKolejka = menuKolejki();
   
-    //Ewentualne wczytanie danych z pliku
+    //generowanie wszystkich liczb
+    int listaDanych[liczbaElementow][2];
+    for(int i = 0; i < liczbaElementow; i++) {
+        listaDanych[i][0] = i;
+        listaDanych[i][1] = losujLiczbe(1, maxPriority);
+    }
 
     switch (wybranaKolejka) {
         case 1: {
@@ -83,7 +81,7 @@ int main() {
                 //pomiar czasu Insert
                 double czasInsert = 0.0;
                 for(int i = 0; i < liczbaPomiarow; i++) {
-                    wypelnijKolejkeMaxHeap(heap[i], startElementow, maxPriority); //wypełnienie kolejki losowymi danymi
+                    wypelnijKolejkeMaxHeap(heap[i], startElementow, listaDanych); //wypełnienie kolejki losowymi danymi
 //                        cout << "Kolejka przed insertem: " << i << endl;
 //                        heap[i].print();
                     auto start = high_resolution_clock::now(); //początek pomiaru czasu
@@ -99,7 +97,7 @@ int main() {
                 //pomiar czasu ExtractMax
                 double czasExtractMax = 0.0;
                 for(int i = 0; i < liczbaPomiarow; i++) {
-                    wypelnijKolejkeMaxHeap(heap[i], startElementow, maxPriority); //wypełnienie kolejki losowymi danymi
+                    wypelnijKolejkeMaxHeap(heap[i], startElementow, listaDanych); //wypełnienie kolejki losowymi danymi
 //                        cout << "Kolejka przed extractMax: " << i << endl;
 //                        heap[i].print();
                     auto start = high_resolution_clock::now();
@@ -115,7 +113,7 @@ int main() {
                 //pomiar czasu FindMax
                 double czasFindMax = 0.0;
                 for(int i = 0; i < liczbaPomiarow; i++) {
-                    wypelnijKolejkeMaxHeap(heap[i], startElementow, maxPriority); //wypełnienie kolejki losowymi danymi
+                    wypelnijKolejkeMaxHeap(heap[i], startElementow, listaDanych); //wypełnienie kolejki losowymi danymi
 //                        cout << "Kolejka przed findMax: " << i << endl;
 //                        heap[i].print();
                     auto start = high_resolution_clock::now();
@@ -132,7 +130,7 @@ int main() {
                 //pomiar czasu ModifyKey
                 double czasModifyKey = 0.0;
                 for(int i = 0; i < liczbaPomiarow; i++) {
-                    wypelnijKolejkeMaxHeap(heap[i], startElementow, maxPriority); //wypełnienie kolejki losowymi danymi
+                    wypelnijKolejkeMaxHeap(heap[i], startElementow, listaDanych); //wypełnienie kolejki losowymi danymi
 //                        cout << "Kolejka przed modifyKey: " << i << endl;
 //                        heap[i].print();
                     auto start = high_resolution_clock::now();
@@ -148,7 +146,7 @@ int main() {
                 //pomiar czasu ReturnSize
                 double czasReturnSize = 0.0;
                 for(int i = 0; i < liczbaPomiarow; i++) {
-                    wypelnijKolejkeMaxHeap(heap[i], startElementow, maxPriority); //wypełnienie kolejki losowymi danymi
+                    wypelnijKolejkeMaxHeap(heap[i], startElementow, listaDanych); //wypełnienie kolejki losowymi danymi
 //                        cout << "Kolejka przed returnSize: " << i << endl;
 //                        heap[i].print();
                     auto start = high_resolution_clock::now();
@@ -182,7 +180,7 @@ int main() {
                 //pomiar czasu Insert
                 double czasInsert = 0.0;
                 for(int i = 0; i < liczbaPomiarow; i++) {
-                    wypelnijKolejkeBST(bst[i], startElementow, maxPriority); //wypełnienie kolejki losowymi danymi
+                    wypelnijKolejkeBST(bst[i], startElementow, listaDanych); //wypełnienie kolejki losowymi danymi
 //                        cout << "Kolejka przed insertem: " << i << endl;
 //                        bst[i].print();
                     auto start = high_resolution_clock::now(); //początek pomiaru czasu
@@ -198,7 +196,7 @@ int main() {
                 //pomiar czasu ExtractMax
                 double czasExtractMax = 0.0;
                 for(int i = 0; i < liczbaPomiarow; i++) {
-                    wypelnijKolejkeBST(bst[i], startElementow, maxPriority); //wypełnienie kolejki losowymi danymi
+                    wypelnijKolejkeBST(bst[i], startElementow, listaDanych); //wypełnienie kolejki losowymi danymi
 //                        cout << "Kolejka przed extractMax: " << i << endl;
 //                        bst[i].print();
                     auto start = high_resolution_clock::now();
@@ -214,7 +212,7 @@ int main() {
                 //pomiar czasu FindMax
                 double czasFindMax = 0.0;
                 for(int i = 0; i < liczbaPomiarow; i++) {
-                    wypelnijKolejkeBST(bst[i], startElementow, maxPriority); //wypełnienie kolejki losowymi danymi
+                    wypelnijKolejkeBST(bst[i], startElementow, listaDanych); //wypełnienie kolejki losowymi danymi
 //                        cout << "Kolejka przed findMax: " << i << endl;
 //                        bst[i].print();
                     auto start = high_resolution_clock::now();
@@ -231,7 +229,7 @@ int main() {
                 //pomiar czasu ModifyKey
                 double czasModifyKey = 0.0;
                 for(int i = 0; i < liczbaPomiarow; i++) {
-                    wypelnijKolejkeBST(bst[i], startElementow, maxPriority); //wypełnienie kolejki losowymi danymi
+                    wypelnijKolejkeBST(bst[i], startElementow, listaDanych); //wypełnienie kolejki losowymi danymi
 //                        cout << "Kolejka przed modifyKey: " << i << endl;
 //                        bst[i].print();
                     auto start = high_resolution_clock::now();
@@ -247,7 +245,7 @@ int main() {
                 //pomiar czasu ReturnSize
                 double czasReturnSize = 0.0;
                 for(int i = 0; i < liczbaPomiarow; i++) {
-                    wypelnijKolejkeBST(bst[i], startElementow, maxPriority); //wypełnienie kolejki losowymi danymi
+                    wypelnijKolejkeBST(bst[i], startElementow, listaDanych); //wypełnienie kolejki losowymi danymi
 //                        cout << "Kolejka przed returnSize: " << i << endl;
 //                        bst[i].print();
                     auto start = high_resolution_clock::now();
