@@ -53,7 +53,7 @@ void wypelnijKolejkeBST(BSTTree &bst, int liczbaElementow, int listaDanych[][2])
 int main() {
     srand(time(nullptr));  // Inicjalizacja generatora liczb losowych
     //podatawowe dane do badan
-    const int liczbaPomiarow = 30; // Liczba pomiarów 30
+    const int liczbaPomiarow = 20; // Liczba pomiarów 20
     const int liczbaElementow = 100000; // Max liczba elementów w stróktórze danych 100000
     const int skokIlosciDanych = 5000; // Skok ilości danych 5000
     const int maxPriority = liczbaElementow * 10;
@@ -193,22 +193,6 @@ int main() {
                 }
                 czasInsert /= liczbaPomiarow; //średni czas Insert
 
-                //pomiar czasu ExtractMax
-                double czasExtractMax = 0.0;
-                for(int i = 0; i < liczbaPomiarow; i++) {
-                    wypelnijKolejkeBST(bst[i], startElementow, listaDanych); //wypełnienie kolejki losowymi danymi
-//                        cout << "Kolejka przed extractMax: " << i << endl;
-//                        bst[i].print();
-                    auto start = high_resolution_clock::now();
-                    bst[i].extractMax(); //usunięcie maksymalnego elementu z kolejki
-                    auto stop = high_resolution_clock::now();
-//                        cout << "Kolejka po extractMax: " << i << endl;
-//                        bst[i].print();
-//                        cout << "-------------------------------" << endl;
-                    czasExtractMax += duration<double, milli>(stop - start).count();
-                }
-                czasExtractMax /= liczbaPomiarow; //średni czas ExtractMax
-
                 //pomiar czasu FindMax
                 double czasFindMax = 0.0;
                 for(int i = 0; i < liczbaPomiarow; i++) {
@@ -226,21 +210,21 @@ int main() {
                 }
                 czasFindMax /= liczbaPomiarow; //średni czas FindMax
 
-                //pomiar czasu ModifyKey
-                double czasModifyKey = 0.0;
+                //pomiar czasu ExtractMax
+                double czasExtractMax = 0.0;
                 for(int i = 0; i < liczbaPomiarow; i++) {
-                    wypelnijKolejkeBST(bst[i], startElementow, listaDanych); //wypełnienie kolejki losowymi danymi
-//                        cout << "Kolejka przed modifyKey: " << i << endl;
+                    //wypelnijKolejkeBST(bst[i], startElementow, listaDanych); //wypełnienie kolejki losowymi danymi
+//                        cout << "Kolejka przed extractMax: " << i << endl;
 //                        bst[i].print();
                     auto start = high_resolution_clock::now();
-                    bst[i].modifyKey(losujLiczbe(0,startElementow - 1), losujLiczbe(1, maxPriority)); //zmiana priorytetu losowego elementu
+                    bst[i].extractMax(); //usunięcie maksymalnego elementu z kolejki
                     auto stop = high_resolution_clock::now();
-//                        cout << "Kolejka po modifyKey: " << i << endl;
+//                        cout << "Kolejka po extractMax: " << i << endl;
 //                        bst[i].print();
 //                        cout << "-------------------------------" << endl;
-                    czasModifyKey += duration<double, milli>(stop - start).count();
+                    czasExtractMax += duration<double, milli>(stop - start).count();
                 }
-                czasModifyKey /= liczbaPomiarow; //średni czas ModifyKey
+                czasExtractMax /= liczbaPomiarow; //średni czas ExtractMax
 
                 //pomiar czasu ReturnSize
                 double czasReturnSize = 0.0;
@@ -256,6 +240,22 @@ int main() {
                     czasReturnSize += duration<double, milli>(stop - start).count();
                 }
                 czasReturnSize /= liczbaPomiarow; //średni czas ReturnSize
+
+                //pomiar czasu ModifyKey
+                double czasModifyKey = 0.0;
+                for(int i = 0; i < liczbaPomiarow; i++) {
+                    //wypelnijKolejkeBST(bst[i], startElementow, listaDanych); //wypełnienie kolejki losowymi danymi
+//                        cout << "Kolejka przed modifyKey: " << i << endl;
+//                        bst[i].print();
+                    auto start = high_resolution_clock::now();
+                    bst[i].modifyKey(losujLiczbe(0,startElementow - 1), losujLiczbe(1, maxPriority)); //zmiana priorytetu losowego elementu
+                    auto stop = high_resolution_clock::now();
+//                        cout << "Kolejka po modifyKey: " << i << endl;
+//                        bst[i].print();
+//                        cout << "-------------------------------" << endl;
+                    czasModifyKey += duration<double, milli>(stop - start).count();
+                }
+                czasModifyKey /= liczbaPomiarow; //średni czas ModifyKey
 
                 fout << startElementow << ";" << fixed << setprecision(ilczbPoPrzecinku) << czasInsert <<
                      ";" << fixed << setprecision(ilczbPoPrzecinku) << czasExtractMax <<
