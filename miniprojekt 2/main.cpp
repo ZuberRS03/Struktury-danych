@@ -84,8 +84,10 @@ int main() {
                     wypelnijKolejkeMaxHeap(heap[i], startElementow, listaDanych); //wypełnienie kolejki losowymi danymi
 //                        cout << "Kolejka przed insertem: " << i << endl;
 //                        heap[i].print();
+                    int wartosc = losujLiczbe(0, startElementow);
+                    int priorytet = losujLiczbe(1, maxPriority);
                     auto start = high_resolution_clock::now(); //początek pomiaru czasu
-                    heap[i].insert(losujLiczbe(1, startElementow), losujLiczbe(1, maxPriority)); //dodanie losowego elementu do kolejki
+                    heap[i].insert(wartosc, priorytet); //dodanie losowego elementu do kolejki
                     auto stop = high_resolution_clock::now(); //koniec pomiaru czasu
 //                        cout << "Kolejka po insert: " << i << endl;
 //                        heap[i].print();
@@ -133,8 +135,10 @@ int main() {
                     wypelnijKolejkeMaxHeap(heap[i], startElementow, listaDanych); //wypełnienie kolejki losowymi danymi
 //                        cout << "Kolejka przed modifyKey: " << i << endl;
 //                        heap[i].print();
+                    int wartosc = losujLiczbe(0, startElementow);
+                    int priorytet = losujLiczbe(1, maxPriority);
                     auto start = high_resolution_clock::now();
-                    heap[i].modifyKey(losujLiczbe(0,startElementow - 1), losujLiczbe(1, maxPriority)); //zmiana priorytetu losowego elementu
+                    heap[i].modifyKey(wartosc, priorytet); //zmiana priorytetu losowego elementu
                     auto stop = high_resolution_clock::now();
 //                        cout << "Kolejka po modifyKey: " << i << endl;
 //                        heap[i].print();
@@ -183,7 +187,7 @@ int main() {
                     wypelnijKolejkeBST(bst[i], startElementow, listaDanych); //wypełnienie kolejki losowymi danymi
 //                        cout << "Kolejka przed insertem: " << i << endl;
 //                        bst[i].print();
-                    int wartosc = losujLiczbe(1, startElementow);
+                    int wartosc = losujLiczbe(0, startElementow);
                     int priorytet = losujLiczbe(1, maxPriority);
                     auto start = high_resolution_clock::now(); //początek pomiaru czasu
                     bst[i].insert(wartosc, priorytet); //dodanie losowego elementu do kolejki
@@ -249,7 +253,7 @@ int main() {
                     //wypelnijKolejkeBST(bst[i], startElementow, listaDanych); //wypełnienie kolejki losowymi danymi
 //                        cout << "Kolejka przed modifyKey: " << i << endl;
 //                        bst[i].print();
-                    int wartosc = losujLiczbe(1, startElementow - 1);
+                    int wartosc = losujLiczbe(0, startElementow);
                     int priorytet = losujLiczbe(1, maxPriority);
                     auto start = high_resolution_clock::now();
                     bst[i].modifyKey(wartosc, priorytet); //zmiana priorytetu losowego elementu
