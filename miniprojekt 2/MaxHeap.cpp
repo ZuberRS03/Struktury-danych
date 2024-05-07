@@ -32,26 +32,55 @@ size_t MaxHeap::returnSize() const {
 }
 
 void MaxHeap::heapifyUp(int index) {
-    while (index > 0 && heap[index].second > heap[(index - 1) / 2].second) {
-        std::swap(heap[index], heap[(index - 1) / 2]);
-        index = (index - 1) / 2;
+    while (index > 0) {
+        int parentIndex = (index - 1) / 2;
+        if (heap[index].second > heap[parentIndex].second) {
+            std::swap(heap[index], heap[parentIndex]);
+            index = parentIndex;
+        } else {
+            break;
+        }
     }
+//    while (index > 0 && heap[index].second > heap[(index - 1) / 2].second) {
+//        std::swap(heap[index], heap[(index - 1) / 2]);
+//        index = (index - 1) / 2;
+//    }
 }
 
 void MaxHeap::heapifyDown(int index) {
-    int left = 2 * index + 1;
-    int right = 2 * index + 2;
-    int largest = index;
-    if (left < heap.size() && heap[left].second > heap[largest].second) {
-        largest = left;
+    int size = heap.size();
+    while (true) {
+        int left = 2 * index + 1;
+        int right = 2 * index + 2;
+        int largest = index;
+
+        if (left < size && heap[left].second > heap[largest].second) {
+            largest = left;
+        }
+        if (right < size && heap[right].second > heap[largest].second) {
+            largest = right;
+        }
+
+        if (largest != index) {
+            std::swap(heap[index], heap[largest]);
+            index = largest;
+        } else {
+            break;
+        }
     }
-    if (right < heap.size() && heap[right].second > heap[largest].second) {
-        largest = right;
-    }
-    if (largest != index) {
-        std::swap(heap[index], heap[largest]);
-        heapifyDown(largest);
-    }
+//    int left = 2 * index + 1;
+//    int right = 2 * index + 2;
+//    int largest = index;
+//    if (left < heap.size() && heap[left].second > heap[largest].second) {
+//        largest = left;
+//    }
+//    if (right < heap.size() && heap[right].second > heap[largest].second) {
+//        largest = right;
+//    }
+//    if (largest != index) {
+//        std::swap(heap[index], heap[largest]);
+//        heapifyDown(largest);
+//    }
 }
 
 int MaxHeap::findIndex(int e) {
@@ -69,4 +98,16 @@ void MaxHeap::print() const {
 
 void MaxHeap::clearHeap() {
     heap.clear();
+}
+
+bool MaxHeap::isHeapValid() const {
+    for (int i = 0; i < heap.size(); i++) {
+        int left = 2 * i + 1;
+        int right = 2 * i + 2;
+        if ((left < heap.size() && heap[i].second < heap[left].second) ||
+            (right < heap.size() && heap[i].second < heap[right].second)) {
+            return false;
+        }
+    }
+    return true;
 }

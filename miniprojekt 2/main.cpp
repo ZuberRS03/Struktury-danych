@@ -57,6 +57,7 @@ int main() {
     const int liczbaElementow = 100000; // Max liczba elementów w stróktórze danych 100000
     const int skokIlosciDanych = 5000; // Skok ilości danych 5000
     const int maxPriority = liczbaElementow * 10;
+    //const int maxPriority = 10;
     const int ilczbPoPrzecinku = 6;
 
     //wybor kolejki
@@ -84,6 +85,7 @@ int main() {
                     wypelnijKolejkeMaxHeap(heap[i], startElementow, listaDanych); //wypełnienie kolejki losowymi danymi
 //                        cout << "Kolejka przed insertem: " << i << endl;
 //                        heap[i].print();
+//                        cout << heap[i].isHeapValid() << endl;
                     int wartosc = losujLiczbe(0, startElementow);
                     int priorytet = losujLiczbe(1, maxPriority);
                     auto start = high_resolution_clock::now(); //początek pomiaru czasu
@@ -91,6 +93,7 @@ int main() {
                     auto stop = high_resolution_clock::now(); //koniec pomiaru czasu
 //                        cout << "Kolejka po insert: " << i << endl;
 //                        heap[i].print();
+//                        cout << heap[i].isHeapValid() << endl;
 //                        cout << "-------------------------------" << endl;
                     czasInsert += duration<double, milli>(stop - start).count(); //dodanie czasu do sumy
                 }
@@ -107,6 +110,7 @@ int main() {
                     auto stop = high_resolution_clock::now();
 //                        cout << "Kolejka po extractMax: " << i << endl;
 //                        heap[i].print();
+//                        cout << heap[i].isHeapValid() << endl;
 //                        cout << "-------------------------------" << endl;
                     czasExtractMax += duration<double, milli>(stop - start).count();
                 }
@@ -135,7 +139,7 @@ int main() {
                     wypelnijKolejkeMaxHeap(heap[i], startElementow, listaDanych); //wypełnienie kolejki losowymi danymi
 //                        cout << "Kolejka przed modifyKey: " << i << endl;
 //                        heap[i].print();
-                    int wartosc = losujLiczbe(0, startElementow);
+                    int wartosc = losujLiczbe(0, startElementow - 1);
                     int priorytet = losujLiczbe(1, maxPriority);
                     auto start = high_resolution_clock::now();
                     heap[i].modifyKey(wartosc, priorytet); //zmiana priorytetu losowego elementu

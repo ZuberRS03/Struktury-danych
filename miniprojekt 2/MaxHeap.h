@@ -22,6 +22,7 @@ public:
     size_t returnSize() const;
     void print() const;
     void clearHeap();
+    bool isHeapValid() const;
 };
 
 #endif
