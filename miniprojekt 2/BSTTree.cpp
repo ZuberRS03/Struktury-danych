@@ -15,7 +15,30 @@ void BSTTree::clear(Node* node) {
 }
 
 void BSTTree::insert(int value, int priority) {
-    root = insert(root, value, priority);
+    Node* newNode = new Node(value, priority);
+    if (!root) {
+        root = newNode;
+        treeSize++;
+        return;
+    }
+
+    Node* parent = nullptr;
+    Node* current = root;
+    while (current) {
+        parent = current;
+        if (priority < current->priority) {
+            current = current->left;
+        } else {
+            current = current->right;
+        }
+    }
+
+    if (priority < parent->priority) {
+        parent->left = newNode;
+    } else {
+        parent->right = newNode;
+    }
+
     treeSize++;
 }
 
@@ -67,26 +90,75 @@ void BSTTree::modifyKey(int value, int newPriority) {
     insert(value, newPriority);
 }
 
-BSTTree::Node* BSTTree::remove(Node* node, int value) {
-    if (!node) return nullptr;
-    if (value < node->value)
-        node->left = remove(node->left, value);
-    else if (value > node->value)
-        node->right = remove(node->right, value);
-    else {
-        if (!node->left || !node->right) {
-            Node* temp = node->left ? node->left : node->right;
-            delete node;
-            treeSize--;
-            return temp;
+BSTTree::Node* BSTTree::remove(Node* root, int value) {
+    Node* parent = nullptr;
+    Node* current = root;
+    while (current && current->value != value) {
+        parent = current;
+        if (value < current->value) {
+            current = current->left;
         } else {
-            Node* temp = findMax(node->left);
-            node->value = temp->value;
-            node->priority = temp->priority;
-            node->left = remove(node->left, temp->value);
+            current = current->right;
         }
     }
-    return node;
+
+    if (!current) return root; // Nie znaleziono wartości
+
+    // Przypadek 1: Usuwany węzeł nie ma potomków (węzeł liści)
+    if (!current->left && !current->right) {
+        if (current != root) {
+            if (parent->left == current) {
+                parent->left = nullptr;
+            } else {
+                parent->right = nullptr;
+            }
+        } else {
+            root = nullptr;
+        }
+        delete current;
+        treeSize--;
+    }
+    // Przypadek 2: Usuwany węzeł ma dwa potomki
+    else if (current->left && current->right) {
+        Node* successor = current->right;
+        Node* successorParent = current;
+
+        while (successor->left) {
+            successorParent = successor;
+            successor = successor->left;
+        }
+
+        current->value = successor->value;
+        current->priority = successor->priority;
+
+        if (successorParent != current) {
+            successorParent->left = successor->right;
+        } else {
+            successorParent->right = successor->right;
+        }
+
+        delete successor;
+        treeSize--;
+    }
+    // Przypadek 3: Usuwany węzeł ma jednego potomka
+    else {
+        Node* child = (current->left) ? current->left : current->right;
+
+        if (current != root) {
+            if (current == parent->left) {
+                parent->left = child;
+            } else {
+                parent->right = child;
+            }
+        } else {
+            root = child;
+        }
+
+        delete current;
+        treeSize--;
+    }
+
+    return root;
 }
 
 int BSTTree::returnSize() const {
