@@ -2,7 +2,6 @@
 #include <fstream> //do obsługi plików
 #include <chrono> //do mierzenia czasu
 #include <cstdlib> //do losowania liczb
-#include <vector>
 #include <iomanip> //do std::fixed i std::setprecision
 
 #include "MaxHeap.h"
@@ -53,18 +52,17 @@ void wypelnijKolejkeBST(BSTTree &bst, int liczbaElementow, int listaDanych[][2])
 int main() {
     srand(time(nullptr));  // Inicjalizacja generatora liczb losowych
     //podatawowe dane do badan
-    const int liczbaPomiarow = 20; // Liczba pomiarów 20
+    const int liczbaPomiarow = 30; // Liczba pomiarów
     const int liczbaElementow = 100000; // Max liczba elementów w stróktórze danych 100000
     const int skokIlosciDanych = 5000; // Skok ilości danych 5000
     const int maxPriority = liczbaElementow * 10;
-    //const int maxPriority = 10;
     const int ilczbPoPrzecinku = 6;
 
     //wybor kolejki
     int wybranaKolejka = menuKolejki();
   
     //generowanie wszystkich liczb
-    int listaDanych[liczbaElementow][2];
+    int listaDanych[liczbaElementow][2]; //tablica przechowująca wylosowane dane
     for(int i = 0; i < liczbaElementow; i++) {
         listaDanych[i][0] = i;
         listaDanych[i][1] = losujLiczbe(1, maxPriority);
@@ -72,22 +70,22 @@ int main() {
 
     switch (wybranaKolejka) {
         case 1: {
-            fout.open("wynikiMaxHeap.txt");
-            fout << "Liczba elementow;Czas insert(e,p);Czas extract-max();Czas find-max();Czas modify-key(e,p);Czas return-size()\n";
+            fout.open("wynikiMaxHeap.txt"); //otwarcie pliku do zapisu
+            fout << "Liczba elementow;Czas insert(e,p);Czas extract-max();Czas find-max();Czas modify-key(e,p);Czas return-size()\n"; //nagłówek pliku
 
             MaxHeap heap[liczbaPomiarow]; //Tworzenie tablicy obiektów klasy MaxHeap
 
-            for(int startElementow = 1; startElementow < liczbaElementow; startElementow += skokIlosciDanych) {
+            for(int startElementow = 1; startElementow < liczbaElementow; startElementow += skokIlosciDanych) { //pętla dla różnej ilości danych
 
                 //pomiar czasu Insert
                 double czasInsert = 0.0;
-                for(int i = 0; i < liczbaPomiarow; i++) {
+                for(int i = 0; i < liczbaPomiarow; i++) { //pętla dla różnych pomiarów
                     wypelnijKolejkeMaxHeap(heap[i], startElementow, listaDanych); //wypełnienie kolejki losowymi danymi
 //                        cout << "Kolejka przed insertem: " << i << endl;
 //                        heap[i].print();
 //                        cout << heap[i].isHeapValid() << endl;
-                    int wartosc = losujLiczbe(0, startElementow);
-                    int priorytet = losujLiczbe(1, maxPriority);
+                    int wartosc = losujLiczbe(0, startElementow); //losowanie wartości
+                    int priorytet = losujLiczbe(1, maxPriority); //losowanie priorytetu
                     auto start = high_resolution_clock::now(); //początek pomiaru czasu
                     heap[i].insert(wartosc, priorytet); //dodanie losowego elementu do kolejki
                     auto stop = high_resolution_clock::now(); //koniec pomiaru czasu
