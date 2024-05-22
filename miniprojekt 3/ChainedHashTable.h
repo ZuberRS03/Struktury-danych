@@ -14,15 +14,44 @@
 class ChainedHashTable : public HashTable{
 private:
     std::vector<std::list<std::pair<int, int>>> table; //wektor list par klucz-wartość
-    int capacity; //pojemność tablicy
+    int capacity; //pojemność tablicy / liczba kubełków
+
     int hash(int key); //funkcja haszująca
 
 public:
-    ChainedHashTable(int capacity); //konstruktor
-    ~ChainedHashTable(); //destruktor
+    //konstruktor
+    ChainedHashTable(int capacity);
+
+    //destruktor
+    ~ChainedHashTable();
+
+    /*
+     * Funkcja wstawiająca parę klucz-wartość do tablicy
+     * @param key - klucz
+     * @param value - wartość
+     * @return void
+     */
     void insert(int key, int value) override;
+
+    /*
+     * Funkcja usuwająca parę klucz-wartość z tablicy
+     * @param key - klucz
+     * @return void
+     */
     void remove(int key) override;
+
+    /*
+     * Funkcja wyszukująca wartość dla danego klucza
+     * @param key - klucz
+     * @return wartość
+     */
     int search(int key) override;
+
+    /*
+     * Funkcja wypisująca tablicę
+     * @return void
+     */
+    void print() const override;
 };
 
 

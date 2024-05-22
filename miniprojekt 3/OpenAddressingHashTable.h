@@ -6,21 +6,52 @@
  * Klasa reprezentująca tablicę haszującą z otwartym adresowaniem
  * Dziedziczy po klasie HashTable
  * Funkcje prywatne hash, probe
+ * Wykorzystanie tablicy kluczy i wartości do obsługi kolizji
  */
 class OpenAddressingHashTable : public HashTable{
 private:
     int* table; //tablica kluczy
+    int* values; //tablica wartości
     int capacity; //pojemność tablicy
     int size; //rozmiar tablicy
+
     int hash(int key); //funkcja haszująca
-    int probe(int key); //funkcja przeszukująca
+    int probe(int key);  //funkcja przeszukująca/sondowania
 
 public:
-    OpenAddressingHashTable(int capacity); //konstruktor
-    ~OpenAddressingHashTable(); //destruktor
+    //konstruktor
+    OpenAddressingHashTable(int capacity);
+
+    //destruktor
+    ~OpenAddressingHashTable();
+
+    /*
+     * Funkcja wstawiająca parę klucz-wartość do tablicy
+     * @param key - klucz
+     * @param value - wartość
+     * @return void
+     */
     void insert(int key, int value) override;
+
+    /*
+     * Funkcja usuwająca parę klucz-wartość z tablicy
+     * @param key - klucz
+     * @return void
+     */
     void remove(int key) override;
+
+    /*
+     * Funkcja wyszukująca wartość dla danego klucza
+     * @param key - klucz
+     * @return wartość
+     */
     int search(int key) override;
+
+    /*
+     * Funkcja wypisująca tablicę
+     * @return void
+     */
+    void print() const override;
 };
 
 
