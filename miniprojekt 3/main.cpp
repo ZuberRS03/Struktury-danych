@@ -24,7 +24,7 @@ int menu_wyboru() {
     cout << "Wybierz strukture danych:" << endl;
     cout << "1. Tablica mieszajaca z adresowaniem otwartym" << endl;
     cout << "2. Tablica mieszajaca z adresowaniem zamknietym" << endl;
-    cout << "3. Tablica mieszajaca z haszowaniem kukułczym" << endl;
+    cout << "3. Tablica mieszajaca z CuckooHash" << endl;
     cout << "4. Wyjscie" << endl;
 
     int wybor = 0;
@@ -32,6 +32,26 @@ int menu_wyboru() {
     cin >> wybor;
 
     return wybor;
+}
+
+void zapelnijDanymiOpenAddressingHash(OpenAddressingHashTable* hashTables[], int dane[][2], int liczbaTablic, int iloscDanych){
+
+    for (int i = 0; i < liczbaTablic; ++i) {
+        hashTables[i]->clear();
+        for (int j = 0; j < iloscDanych; ++j) {
+            hashTables[i]->insert(dane[j][0], dane[j][1]);
+        }
+    }
+}
+
+void zapelnijDanymiChainedHash(ChainedHashTable* hashTables[], int dane[][2], int liczbaTablic, int iloscDanych){
+
+    for (int i = 0; i < liczbaTablic; ++i) {
+        hashTables[i]->clear();
+        for (int j = 0; j < iloscDanych; ++j) {
+            hashTables[i]->insert(dane[j][0], dane[j][1]);
+        }
+    }
 }
 
 void zapelnijDanymiCuckooHash(CuckooHashTable* hashTables[], int dane[][2], int liczbaTablic, int iloscDanych){
@@ -43,12 +63,159 @@ void zapelnijDanymiCuckooHash(CuckooHashTable* hashTables[], int dane[][2], int 
         }
     }
 }
-void pomiar_OpenAddressingHashTable(int dane[10000][2], int iloscDanych, int skokIlosciDanych, int liczbaPomiarow, int cyfrPoPrzecinku){
 
+void pomiar_OpenAddressingHashTable(int dane[10000][2], int iloscDanych, int skokIlosciDanych, int liczbaPomiarow, int cyfrPoPrzecinku){
+    fout.open("OpenAddressingHash_Wyniki.txt");
+
+    fout << "Ilosc elementow; czas insert(); czas remove()" << endl;
+
+    // Tworzenie 30 tablic mieszających z haszowaniem kukułczym
+    OpenAddressingHashTable* hashTables[liczbaPomiarow];
+
+    // Inicjalizacja każdej tablicy
+    for(int i = 0; i < liczbaPomiarow; ++i) {
+        hashTables[i] = new OpenAddressingHashTable(10);
+    }
+
+    for(int startElementow = 1; startElementow <= iloscDanych + 1; startElementow += skokIlosciDanych) {
+        cout << "-------------------------------------------------- " << endl;
+        cout << "Ilosc elementow: " << startElementow << endl;
+
+        int randomKey = startElementow;
+        int randomValue = losujLiczbe(0, 10000);
+
+        //Tu powinno być doprowadzenie tablicy do stany początkowego
+        zapelnijDanymiOpenAddressingHash(hashTables, dane, liczbaPomiarow, startElementow);
+
+        cout << endl;
+        cout << "dodawanie elementow do tablicy: " << endl;
+
+        // Pomiar czasu insert()
+        double czasInsert = 0.0;
+        for(int j = 0; j < liczbaPomiarow; ++j) {
+
+            cout << endl;
+            cout << "pomiar: " << j << endl;
+
+            hashTables[j]->print();
+
+            auto start = high_resolution_clock::now(); //początek pomiaru czasu
+            hashTables[j]->insert(randomKey, randomValue);
+            auto stop = high_resolution_clock::now(); //koniec pomiaru czasu
+            czasInsert += duration<double, milli>(stop - start).count(); //dodanie czasu do sumy
+
+            cout << "po dodaniu "<< endl;
+
+            hashTables[j]->print();
+        }
+        czasInsert /= liczbaPomiarow; //średni czas Insert
+
+        cout << endl;
+        cout << "usuwanie elementow do tablicy: " << endl;
+
+        // Pomiar czasu remove()
+        double czasRemove = 0.0;
+        for(int j = 0; j < liczbaPomiarow; ++j) {
+
+            cout << "pomiar: " << j << endl;
+
+            auto start = high_resolution_clock::now(); //początek pomiaru czasu
+            hashTables[j]->remove(randomKey);
+            auto stop = high_resolution_clock::now(); //koniec pomiaru czasu
+            czasRemove += duration<double, milli>(stop - start).count(); //dodanie czasu do sumy
+
+            cout << "po odjeciu "<< endl;
+
+            hashTables[j]->print();
+        }
+        czasRemove /= liczbaPomiarow; //średni czas Remove
+
+        fout << startElementow << "; " << fixed << setprecision(cyfrPoPrzecinku) << czasInsert <<
+             "; " << fixed << setprecision(cyfrPoPrzecinku) << czasRemove << endl;
+    }
+    // Sprzątanie pamięci
+    for (int i = 0; i < liczbaPomiarow; ++i) {
+        delete hashTables[i];
+    }
+
+    fout.close();
 }
 
 void pomiar_ChainedHashTable(int dane[10000][2], int iloscDanych, int skokIlosciDanych, int liczbaPomiarow, int cyfrPoPrzecinku){
+    fout.open("ChainedHash_Wyniki.txt");
 
+    fout << "Ilosc elementow; czas insert(); czas remove()" << endl;
+
+    // Tworzenie 30 tablic mieszających z haszowaniem kukułczym
+    ChainedHashTable* hashTables[liczbaPomiarow];
+
+    // Inicjalizacja każdej tablicy
+    for(int i = 0; i < liczbaPomiarow; ++i) {
+        hashTables[i] = new ChainedHashTable(10);
+    }
+
+    for(int startElementow = 1; startElementow <= iloscDanych + 1; startElementow += skokIlosciDanych) {
+        cout << "-------------------------------------------------- " << endl;
+        cout << "Ilosc elementow: " << startElementow << endl;
+
+        int randomKey = startElementow;
+        int randomValue = losujLiczbe(0, 10000);
+
+        //Tu powinno być doprowadzenie tablicy do stany początkowego
+        zapelnijDanymiChainedHash(hashTables, dane, liczbaPomiarow, startElementow);
+
+        cout << endl;
+        cout << "dodawanie elementow do tablicy: " << endl;
+
+        // Pomiar czasu insert()
+        double czasInsert = 0.0;
+        for(int j = 0; j < liczbaPomiarow; ++j) {
+
+            cout << endl;
+            cout << "pomiar: " << j << endl;
+
+            hashTables[j]->print();
+
+            auto start = high_resolution_clock::now(); //początek pomiaru czasu
+            hashTables[j]->insert(randomKey, randomValue);
+            auto stop = high_resolution_clock::now(); //koniec pomiaru czasu
+            czasInsert += duration<double, milli>(stop - start).count(); //dodanie czasu do sumy
+
+            cout << "po dodaniu "<< endl;
+
+            hashTables[j]->print();
+        }
+        czasInsert /= liczbaPomiarow; //średni czas Insert
+
+        cout << endl;
+        cout << "usuwanie elementow do tablicy: " << endl;
+
+        // Pomiar czasu remove()
+        double czasRemove = 0.0;
+        for(int j = 0; j < liczbaPomiarow; ++j) {
+
+            cout << "pomiar: " << j << endl;
+
+            auto start = high_resolution_clock::now(); //początek pomiaru czasu
+            hashTables[j]->remove(randomKey);
+            auto stop = high_resolution_clock::now(); //koniec pomiaru czasu
+            czasRemove += duration<double, milli>(stop - start).count(); //dodanie czasu do sumy
+
+            cout << "po odjeciu "<< endl;
+
+            hashTables[j]->print();
+        }
+        czasRemove /= liczbaPomiarow; //średni czas Remove
+
+        fout << startElementow << "; " << fixed << setprecision(cyfrPoPrzecinku) << czasInsert <<
+             "; " << fixed << setprecision(cyfrPoPrzecinku) << czasRemove << endl;
+    }
+    // Sprzątanie pamięci
+    for (int i = 0; i < liczbaPomiarow; ++i) {
+        delete hashTables[i];
+    }
+
+    fout.close();
 }
 
 void pomiar_CockoHashTable(int dane[10000][2], int iloscDanych, int skokIlosciDanych, int liczbaPomiarow, int cyfrPoPrzecinku) {
@@ -64,11 +231,11 @@ void pomiar_CockoHashTable(int dane[10000][2], int iloscDanych, int skokIlosciDa
         hashTables[i] = new CuckooHashTable(10);
     }
 
-    for(int startElementow = 1; startElementow <= iloscDanych; startElementow += skokIlosciDanych) {
+    for(int startElementow = 1; startElementow <= iloscDanych + 1; startElementow += skokIlosciDanych) {
         cout << "-------------------------------------------------- " << endl;
         cout << "Ilosc elementow: " << startElementow << endl;
 
-        int randomKey = losujLiczbe(0, iloscDanych + 1);
+        int randomKey = startElementow;
         int randomValue = losujLiczbe(0, 10000);
 
         //Tu powinno być doprowadzenie tablicy do stany początkowego
@@ -135,8 +302,8 @@ int main() {
     const int liczbaPomiarow = 2; // ilość pomiarów 30
     const int cyfrPoPrzecinku = 6; // ilość cyfr po przecinku 6
 
-    int dane[iloscDanych][2]; // tablica przechowująca dane
-    for(int i = 0; i < iloscDanych; i++) {
+    int dane[iloscDanych + 1][2]; // tablica przechowująca dane
+    for(int i = 0; i < iloscDanych + 1; i++) {
         dane[i][0] = i; // klucz
         dane[i][1] = losujLiczbe(0, 10000); // wartość
     }

@@ -48,6 +48,35 @@ int OpenAddressingHashTable::probe(int key) {
 
 // Funkcja wstawiająca klucz i wartość do tablicy
 void OpenAddressingHashTable::insert(int key, int value) {
+    // Sprawdzenie, czy tablica jest pełna
+    if (size == capacity - 1) {
+        // Zwiększenie pojemności tablicy
+        int newCapacity = 2 * capacity;
+        int* newTable = new int[newCapacity];
+        int* newValues = new int[newCapacity];
+
+        // Przeniesienie istniejących kluczy i wartości do nowych tablic
+        for (int i = 0; i < capacity; i++) {
+            newTable[i] = table[i];
+            newValues[i] = values[i];
+        }
+
+        // Inicjalizacja nowych miejsc jako pustych
+        for (int i = capacity; i < newCapacity; i++) {
+            newTable[i] = -1;
+            newValues[i] = -1;
+        }
+
+        // Usunięcie starych tablic
+        delete[] table;
+        delete[] values;
+
+        // Ustawienie nowych tablic jako bieżących tablic kluczy i wartości
+        table = newTable;
+        values = newValues;
+        capacity = newCapacity;
+    }
+
     int index = probe(key);  // Znalezienie odpowiedniego indeksu
     if (table[index] == DELETED_KEY) { // Jeżeli pozycja jest oznaczona jako usunięta
         --size; // Zmniejszenie rozmiaru tablicy, ponieważ będziemy wstawiać na to miejsce
