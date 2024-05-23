@@ -55,6 +55,18 @@ public:
      * @return void
      */
     void print() const override;
+
+    /*
+     * Funkcja zwracająca pojemność tablicy
+     * @return pojemność
+     */
+    int getCapacity() const override;
+
+    /*
+     * Funkcja czyszcząca tablicę
+     * @return void
+     */
+    void clear() override;
 };
 
 

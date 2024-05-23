@@ -101,3 +101,17 @@ void OpenAddressingHashTable::print() const {
         }
     }
 }
+
+// Funkcja zwracająca pojemność tablicy
+int OpenAddressingHashTable::getCapacity() const {
+    return capacity;
+}
+
+// Funkcja czyszcząca tablicę
+void OpenAddressingHashTable::clear() {
+    for (int i = 0; i < capacity; ++i) { // Przejście przez całą tablicę
+        table[i] = -1; // Oznaczenie pozycji jako pustej
+        values[i] = -1; // Oznaczenie wartości jako pustej
+    }
+    size = 0; // Zresetowanie rozmiaru tablicy
+}

@@ -138,3 +138,17 @@ void CuckooHashTable::print() const {
         }
     }
 }
+
+// Funkcja zwracająca pojemność tablicy
+int CuckooHashTable::getCapacity() const {
+    return capacity;
+}
+
+// Funkcja czyszcząca tablicę
+void CuckooHashTable::clear() {
+    for (int i = 0; i < capacity; ++i) {
+        table1[i] = {-1, -1}; // Inicjalizacja pierwszej tablicy wartością -1, co oznacza, że pozycja jest pusta
+        table2[i] = {-1, -1}; // Inicjalizacja drugiej tablicy wartością -1, co oznacza, że pozycja jest pusta
+    }
+    size = 0; // Resetowanie rozmiaru
+}

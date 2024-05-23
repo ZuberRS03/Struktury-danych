@@ -12,6 +12,8 @@ public:
     virtual void remove(int key) = 0; //funkcja wirtualna usuwająca element z tablicy
     virtual int search(int key) = 0; //funkcja wirtualna wyszukująca element w tablicy
     virtual void print() const = 0;
+    virtual int getCapacity() const = 0;
+    virtual void clear() = 0;
     virtual ~HashTable() = default; //destruktor wirtualny
 };
 

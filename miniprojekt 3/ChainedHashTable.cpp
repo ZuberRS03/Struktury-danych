@@ -61,3 +61,17 @@ void ChainedHashTable::print() const {
         std::cout << std::endl; // Przejście do nowej linii po wyświetleniu zawartości kubełka
     }
 }
+
+// Funkcja zwracająca pojemność tablicy
+int ChainedHashTable::getCapacity() const {
+    return capacity;
+}
+
+// Funkcja czyszcząca tablicę
+void ChainedHashTable::clear() {
+    for (int i = 0; i < capacity; ++i) { // Iteracja przez wszystkie kubełki
+        table[i].clear(); // Wyczyszczenie listy w kubełku
+    }
+    table.clear(); // Wyczyszczenie całej tablicy
+    table.resize(capacity); // Ponowne zainicjalizowanie pustymi listami
+}
