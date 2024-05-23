@@ -14,6 +14,7 @@ private:
     int* values; //tablica wartości
     int capacity; //pojemność tablicy
     int size; //rozmiar tablicy
+    const int DELETED_KEY = -2; // Stała oznaczająca usunięty klucz
 
     int hash(int key); //funkcja haszująca
     int probe(int key);  //funkcja przeszukująca/sondowania
