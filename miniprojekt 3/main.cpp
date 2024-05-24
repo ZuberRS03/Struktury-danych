@@ -78,8 +78,8 @@ void pomiar_OpenAddressingHashTable(int dane[10000][2], int iloscDanych, int sko
     }
 
     for(int startElementow = 1; startElementow <= iloscDanych + 1; startElementow += skokIlosciDanych) {
-        cout << "-------------------------------------------------- " << endl;
-        cout << "Ilosc elementow: " << startElementow << endl;
+//        cout << "-------------------------------------------------- " << endl;
+//        cout << "Ilosc elementow: " << startElementow << endl;
 
         int randomKey = startElementow;
         int randomValue = losujLiczbe(0, 10000);
@@ -87,46 +87,44 @@ void pomiar_OpenAddressingHashTable(int dane[10000][2], int iloscDanych, int sko
         //Tu powinno być doprowadzenie tablicy do stany początkowego
         zapelnijDanymiOpenAddressingHash(hashTables, dane, liczbaPomiarow, startElementow);
 
-        cout << endl;
-        cout << "dodawanie elementow do tablicy: " << endl;
+//        cout << endl;
+//        cout << "dodawanie elementow do tablicy: " << endl;
 
         // Pomiar czasu insert()
         double czasInsert = 0.0;
         for(int j = 0; j < liczbaPomiarow; ++j) {
 
-            cout << endl;
-            cout << "pomiar: " << j << endl;
-
-            hashTables[j]->print();
+//            cout << endl;
+//            cout << "pomiar: " << j << endl;
+//            hashTables[j]->print();
 
             auto start = high_resolution_clock::now(); //początek pomiaru czasu
             hashTables[j]->insert(randomKey, randomValue);
             auto stop = high_resolution_clock::now(); //koniec pomiaru czasu
             czasInsert += duration<double, milli>(stop - start).count(); //dodanie czasu do sumy
 
-            cout << "po dodaniu "<< endl;
-
-            hashTables[j]->print();
+//            cout << "po dodaniu "<< endl;
+//            hashTables[j]->print();
         }
         czasInsert /= liczbaPomiarow; //średni czas Insert
 
-        cout << endl;
-        cout << "usuwanie elementow do tablicy: " << endl;
+//        cout << endl;
+//        cout << "usuwanie elementow do tablicy: " << endl;
 
         // Pomiar czasu remove()
         double czasRemove = 0.0;
         for(int j = 0; j < liczbaPomiarow; ++j) {
 
-            cout << "pomiar: " << j << endl;
+//
 
             auto start = high_resolution_clock::now(); //początek pomiaru czasu
             hashTables[j]->remove(randomKey);
             auto stop = high_resolution_clock::now(); //koniec pomiaru czasu
             czasRemove += duration<double, milli>(stop - start).count(); //dodanie czasu do sumy
 
-            cout << "po odjeciu "<< endl;
-
-            hashTables[j]->print();
+//            cout << "pomiar: " << j << endl;
+//            cout << "po odjeciu "<< endl;
+//            hashTables[j]->print();
         }
         czasRemove /= liczbaPomiarow; //średni czas Remove
 
@@ -155,8 +153,8 @@ void pomiar_ChainedHashTable(int dane[10000][2], int iloscDanych, int skokIlosci
     }
 
     for(int startElementow = 1; startElementow <= iloscDanych + 1; startElementow += skokIlosciDanych) {
-        cout << "-------------------------------------------------- " << endl;
-        cout << "Ilosc elementow: " << startElementow << endl;
+//        cout << "-------------------------------------------------- " << endl;
+//        cout << "Ilosc elementow: " << startElementow << endl;
 
         int randomKey = startElementow;
         int randomValue = losujLiczbe(0, 10000);
@@ -164,46 +162,43 @@ void pomiar_ChainedHashTable(int dane[10000][2], int iloscDanych, int skokIlosci
         //Tu powinno być doprowadzenie tablicy do stany początkowego
         zapelnijDanymiChainedHash(hashTables, dane, liczbaPomiarow, startElementow);
 
-        cout << endl;
-        cout << "dodawanie elementow do tablicy: " << endl;
+//        cout << endl;
+//        cout << "dodawanie elementow do tablicy: " << endl;
 
         // Pomiar czasu insert()
         double czasInsert = 0.0;
         for(int j = 0; j < liczbaPomiarow; ++j) {
 
-            cout << endl;
-            cout << "pomiar: " << j << endl;
-
-            hashTables[j]->print();
+//            cout << endl;
+//            cout << "pomiar: " << j << endl;
+//            hashTables[j]->print();
 
             auto start = high_resolution_clock::now(); //początek pomiaru czasu
             hashTables[j]->insert(randomKey, randomValue);
             auto stop = high_resolution_clock::now(); //koniec pomiaru czasu
             czasInsert += duration<double, milli>(stop - start).count(); //dodanie czasu do sumy
 
-            cout << "po dodaniu "<< endl;
-
-            hashTables[j]->print();
+//            cout << "po dodaniu "<< endl;
+//            hashTables[j]->print();
         }
         czasInsert /= liczbaPomiarow; //średni czas Insert
 
-        cout << endl;
-        cout << "usuwanie elementow do tablicy: " << endl;
+//        cout << endl;
+//        cout << "usuwanie elementow do tablicy: " << endl;
 
         // Pomiar czasu remove()
         double czasRemove = 0.0;
         for(int j = 0; j < liczbaPomiarow; ++j) {
 
-            cout << "pomiar: " << j << endl;
+//            cout << "pomiar: " << j << endl;
 
             auto start = high_resolution_clock::now(); //początek pomiaru czasu
             hashTables[j]->remove(randomKey);
             auto stop = high_resolution_clock::now(); //koniec pomiaru czasu
             czasRemove += duration<double, milli>(stop - start).count(); //dodanie czasu do sumy
 
-            cout << "po odjeciu "<< endl;
-
-            hashTables[j]->print();
+//            cout << "po odjeciu "<< endl;
+//            hashTables[j]->print();
         }
         czasRemove /= liczbaPomiarow; //średni czas Remove
 
@@ -232,8 +227,8 @@ void pomiar_CockoHashTable(int dane[10000][2], int iloscDanych, int skokIlosciDa
     }
 
     for(int startElementow = 1; startElementow <= iloscDanych + 1; startElementow += skokIlosciDanych) {
-        cout << "-------------------------------------------------- " << endl;
-        cout << "Ilosc elementow: " << startElementow << endl;
+//        cout << "-------------------------------------------------- " << endl;
+//        cout << "Ilosc elementow: " << startElementow << endl;
 
         int randomKey = startElementow;
         int randomValue = losujLiczbe(0, 10000);
@@ -241,46 +236,43 @@ void pomiar_CockoHashTable(int dane[10000][2], int iloscDanych, int skokIlosciDa
         //Tu powinno być doprowadzenie tablicy do stany początkowego
         zapelnijDanymiCuckooHash(hashTables, dane, liczbaPomiarow, startElementow);
 
-        cout << endl;
-        cout << "dodawanie elementow do tablicy: " << endl;
+//        cout << endl;
+//        cout << "dodawanie elementow do tablicy: " << endl;
 
         // Pomiar czasu insert()
         double czasInsert = 0.0;
         for(int j = 0; j < liczbaPomiarow; ++j) {
 
-            cout << endl;
-            cout << "pomiar: " << j << endl;
-
-            hashTables[j]->print();
+//            cout << endl;
+//            cout << "pomiar: " << j << endl;
+//            hashTables[j]->print();
 
             auto start = high_resolution_clock::now(); //początek pomiaru czasu
             hashTables[j]->insert(randomKey, randomValue);
             auto stop = high_resolution_clock::now(); //koniec pomiaru czasu
             czasInsert += duration<double, milli>(stop - start).count(); //dodanie czasu do sumy
 
-            cout << "po dodaniu "<< endl;
-
-            hashTables[j]->print();
+//            cout << "po dodaniu "<< endl;
+//            hashTables[j]->print();
         }
         czasInsert /= liczbaPomiarow; //średni czas Insert
 
-        cout << endl;
-        cout << "usuwanie elementow do tablicy: " << endl;
+//        cout << endl;
+//        cout << "usuwanie elementow do tablicy: " << endl;
 
         // Pomiar czasu remove()
         double czasRemove = 0.0;
         for(int j = 0; j < liczbaPomiarow; ++j) {
 
-            cout << "pomiar: " << j << endl;
+//            cout << "pomiar: " << j << endl;
 
             auto start = high_resolution_clock::now(); //początek pomiaru czasu
             hashTables[j]->remove(randomKey);
             auto stop = high_resolution_clock::now(); //koniec pomiaru czasu
             czasRemove += duration<double, milli>(stop - start).count(); //dodanie czasu do sumy
 
-            cout << "po odjeciu "<< endl;
-
-            hashTables[j]->print();
+//            cout << "po odjeciu "<< endl;
+//            hashTables[j]->print();
         }
         czasRemove /= liczbaPomiarow; //średni czas Remove
 
@@ -297,9 +289,9 @@ void pomiar_CockoHashTable(int dane[10000][2], int iloscDanych, int skokIlosciDa
 
 int main() {
 
-    const int iloscDanych = 15; // ilość danych do przetworzenia 10000
-    const int skokIlosciDanych = 5; // Skok ilości danych 500
-    const int liczbaPomiarow = 2; // ilość pomiarów 30
+    const int iloscDanych = 10000; // ilość danych do przetworzenia 10000
+    const int skokIlosciDanych = 500; // Skok ilości danych 500
+    const int liczbaPomiarow = 30; // ilość pomiarów 30
     const int cyfrPoPrzecinku = 6; // ilość cyfr po przecinku 6
 
     int dane[iloscDanych + 1][2]; // tablica przechowująca dane
